@@ -33,8 +33,9 @@ All developers must have the following tools installed:
 
 1.  **Start Services:** Run the local database and Redis:
     ```bash
-    cd backend/app
+    cd backend
     docker-compose up -d
+    cd .. 
     ```
 2.  **Inject Secrets:** Export your "Secret Zero" variables from Infisical for the `dev` environment.
     ```bash
@@ -45,14 +46,16 @@ All developers must have the following tools installed:
     ```
 3.  **Run Migrations:**
     ```bash
-    cd backend/app
+    cd backend
     cargo loco db migrate
+    cd ..
     ```
 4.  **Run Backend (Hot-Reload):**
     ```bash
-    cd backend/app
+    cd backend
     cargo loco start
-    # Backend running on http://localhost:3001
+    # Backend running on http://localhost:5150
+    cd ..
     ```
 5.  **Run Frontend (Hot-Reload):**
     ```bash
