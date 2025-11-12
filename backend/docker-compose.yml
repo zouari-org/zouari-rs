@@ -1,0 +1,56 @@
+services:
+  # 1. PostgreSQL Database
+  zouari-rs-db:
+    image: postgres:16-alpine
+    container_name: zouari-rs-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - zouari-rs-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # 2. Redis Cache & Queue
+  zouari-rs-redis:
+    image: redis:7-alpine
+    container_name: zouari-rs-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - zouari-rs-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # 3. Mailpit (Local Email Catcher)
+  zouari-rs-mailpit:
+    image: axllent/mailpit
+    container_name: zouari-rs-mailpit
+    ports:
+      - "1025:1025" # SMTP Port
+      - "8025:8025" # Web UI
+    environment:
+      MP_MAX_MESSAGES: 5000
+      MP_DATABASE: /data/mailpit.db
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+    volumes:
+      - zouari-rs-mailpit-data:/data
+    restart: unless-stopped
+
+volumes:
+  zouari-rs-postgres-data:
+  zouari-rs-redis-data:
+  zouari-rs-mailpit-data:

@@ -35,6 +35,8 @@ validator = { version = "0.20" }
 uuid = { version = "1.6", features = ["v4"] }
 include_dir = { version = "0.7" }
 axum-extra = { version = "0.10", features = ["form"] }
+infisical = "0.0.3"
+figment = { version = "0.10.19", features = ["env"] }
 
 [[bin]]
 name = "backend-cli"

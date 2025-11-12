@@ -12,6 +12,7 @@ use loco_rs::{
 };
 use migration::Migrator;
 use std::path::Path;
+use crate::config::load_config_from_infisical;
 
 #[allow(unused_imports)]
 use crate::{controllers, models::_entities::users, tasks, workers::downloader::DownloadWorker};
@@ -32,6 +33,20 @@ impl Hooks for App {
                 .unwrap_or("dev")
         )
     }
+
+    //
+    // --- THIS IS OUR NEW CONFIGURATION HOOK ---
+    //
+    async fn load_config(environment: &Environment) -> Result<Config> {
+        println!(
+            "Ignoring environment: '{}'. Loading config from Infisical...",
+            environment.to_string()
+        );
+        load_config_from_infisical().await
+    }
+    //
+    // --- END OF NEW HOOK ---
+    //
 
     async fn boot(
         mode: StartMode,
