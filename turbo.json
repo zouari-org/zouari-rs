@@ -1,0 +1,33 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["backend/Cargo.lock"],
+  "tasks": {
+    "//backend:build": {
+      "cache": false,
+      "inputs": ["backend/**", "!backend/target/**"],
+      "outputs": ["backend/target/release/app"]
+    },
+    "//backend:test": {
+      "inputs": ["backend/**", "!backend/target/**"]
+    },
+    "//backend:lint": {
+      "inputs": ["backend/**", "!backend/target/**"]
+    },
+    "build": {
+      "dependsOn": ["//backend:build", "^build"],
+      "outputs": ["apps/web/.next/**", "packages/api-client/dist/**"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "test": {
+      "dependsOn": ["//backend:test"],
+      "outputs": []
+    },
+    "lint": {
+      "dependsOn": ["//backend:lint"],
+      "outputs": []
+    }
+  }
+}
