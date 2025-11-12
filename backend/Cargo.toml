@@ -1,6 +1,0 @@
-[workspace]
-members = [
-    "app"
-    # Our shared libraries ('crates') will go here later
-]
-resolver = "2"
