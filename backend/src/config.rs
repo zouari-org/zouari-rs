@@ -10,56 +10,79 @@ use std::env;
 // --- Infisical "Secret Zero" Loader ---
 //
 pub async fn load_config_from_infisical() -> Result<Config> {
-    // 1. Read "Secret Zero" (Machine Identity) from environment
-    // These names are our "ZOUARI" standard. We manually read them
-    // and pass them to the SDK.
-    let site_url = env::var("INFISICAL_SITE_URL")
-        .map_err(|e| Error::Message(format!("Missing INFISICAL_SITE_URL: {e}")))?;
-    let client_id = env::var("INFISICAL_CLIENT_ID")
-        .map_err(|e| Error::Message(format!("Missing INFISICAL_CLIENT_ID: {e}")))?;
-    let client_secret = env::var("INFISICAL_CLIENT_SECRET")
-        .map_err(|e| Error::Message(format!("Missing INFISICAL_CLIENT_SECRET: {e}")))?;
-    let project_id = env::var("INFISICAL_PROJECT_ID")
-        .map_err(|e| Error::Message(format!("Missing INFISICAL_PROJECT_ID: {e}")))?;
-    let environment = env::var("INFISICAL_ENVIRONMENT")
-        .map_err(|e| Error::Message(format!("Missing INFISICAL_ENVIRONMENT: {e}")))?;
+  // 1. Read "Secret Zero" (Machine Identity) from environment
+  let site_url = env::var("INFISICAL_BASE_URL")
+    .map_err(|e| Error::Message(format!("Missing INFISICAL_BASE_URL: {e}")))?;
+  let client_id = env::var("INFISICAL_CLIENT_ID")
+    .map_err(|e| Error::Message(format!("Missing INFISICAL_CLIENT_ID: {e}")))?;
+  let client_secret = env::var("INFISICAL_CLIENT_SECRET")
+    .map_err(|e| Error::Message(format!("Missing INFISICAL_CLIENT_SECRET: {e}")))?;
+  let project_id = env::var("INFISICAL_SECRETS_PROJECT_ID")
+    .map_err(|e| Error::Message(format!("Missing INFISICAL_SECRETS_PROJECT_ID: {e}")))?;
+  let environment_name = env::var("INFISICAL_ENVIRONMENT")
+    .map_err(|e| Error::Message(format!("Missing INFISICAL_ENVIRONMENT: {e}")))?;
 
-    // 2. Initialize Infisical Client
-    let mut client = Client::builder()
-        .base_url(&site_url)
-        .build()
-        .await
-        .map_err(|e| Error::Message(format!("Failed to build Infisical client: {e}")))?;
+  // 2. Build the client.
+  let mut client = Client::builder()
+    .base_url(&site_url)
+    .build()
+    .await
+    .map_err(|e| Error::Message(format!("Failed to build Infisical client: {e}")))?;
 
-    // 3. Log in
-    let auth_method = AuthMethod::new_universal_auth(&client_id, &client_secret);
-    client
-        .login(auth_method)
-        .await
-        .map_err(|e| Error::Message(format!("Infisical auth failed: {e}")))?;
+  // 3. Set up authentication method and log in.
+  let auth_method = AuthMethod::new_universal_auth(&client_id, &client_secret);
 
-    println!("Infisical SDK authenticated successfully.");
+  client
+    .login(auth_method)
+    .await
+    .map_err(|e| Error::Message(format!("Infisical auth failed: {e}")))?;
 
-    // 4. Fetch *all* secrets (Using the NEW ListSecretsRequest builder)
-    let request = ListSecretsRequest::builder(&project_id, &environment)
-        .recursive(true)
-        .build();
-    let secrets = client
-        .secrets()
-        .list(request)
-        .await
-        .map_err(|e| Error::Message(format!("Failed to fetch secrets: {e}")))?;
+  println!("Infisical SDK authenticated successfully.");
 
-    // 5. Build a `figment::Figment` config object
-    let mut config_figment = Figment::new();
-    for secret in secrets {
-        let key = secret.secret_key.replace('_', ".").to_lowercase();
-        config_figment = config_figment.merge((key, secret.secret_value));
-    }
+  // 4. Build a request to get all secrets AND ATTACH TO ENVIRONMENT.
+  let request = ListSecretsRequest::builder(&project_id, &environment_name)
+    .path("/")
+    .recursive(true)
+    .attach_to_process_env(true)
+    .build();
 
-    // 6. Extract the Figment into the *official* `loco_rs::config::Config` struct
-    config_figment
-        .merge(Env::prefixed("APP_").split("_"))
-        .extract()
-        .map_err(|e| Error::Message(format!("Figment extraction failed: {e}")))
+  // Make the API call. This populates the environment.
+  client.secrets().list(request).await
+    .map_err(|e| Error::Message(format!("Failed to fetch secrets: {e}")))?;
+
+  println!("Infisical SDK has attached all secrets to the environment.");
+
+  // 5. Build config from environment
+  // CRITICAL FIX: We need to split only the first underscore
+  // APP_DATABASE_ENABLE_LOGGING should become: database.enable_logging (NOT database.enable.logging)
+  // APP_LOGGER_LEVEL should become: logger.level
+
+  let config: Config = Figment::new()
+    .merge(
+      Env::prefixed("APP_")
+        .map(|key| {
+          // Split only on the FIRST underscore to get the section
+          // Then lowercase the remaining part for the field name
+          let key_str = key.as_str();
+          if let Some(first_underscore) = key_str.find('_') {
+            let (section, field) = key_str.split_at(first_underscore);
+            let field = &field[1..]; // Remove the leading underscore
+            format!("{}.{}", section.to_lowercase(), field.to_lowercase()).into()
+          } else {
+            key_str.to_lowercase().into()
+          }
+        })
+    )
+    .extract()
+    .map_err(|e| {
+      // Enhanced error reporting
+      eprintln!("\n=== Figment Extraction Error ===");
+      eprintln!("Error: {:#?}", e);
+      eprintln!("\nThis usually means a required config field is missing.");
+      eprintln!("Check your Infisical secrets for the '{}' environment.", environment_name);
+      eprintln!("================================\n");
+      Error::Message(format!("Figment extraction failed: {e}"))
+    })?;
+
+  Ok(config)
 }
