@@ -1,4 +1,5 @@
 pub mod app;
+pub mod config;
 pub mod controllers;
 pub mod data;
 pub mod initializers;
@@ -7,4 +8,3 @@ pub mod models;
 pub mod tasks;
 pub mod views;
 pub mod workers;
-pub mod config;

@@ -1,5 +1,5 @@
 use async_trait::async_trait;
-use chrono::{offset::Local, Duration};
+use chrono::{Duration, offset::Local};
 use loco_rs::{auth::jwt, hash, prelude::*};
 use serde::{Deserialize, Serialize};
 use serde_json::Map;
@@ -62,11 +62,7 @@ impl ActiveModelBehavior for super::_entities::users::ActiveModel {
 impl Authenticable for Model {
     async fn find_by_api_key(db: &DatabaseConnection, api_key: &str) -> ModelResult<Self> {
         let user = users::Entity::find()
-            .filter(
-                model::query::condition()
-                    .eq(users::Column::ApiKey, api_key)
-                    .build(),
-            )
+            .filter(model::query::condition().eq(users::Column::ApiKey, api_key).build())
             .one(db)
             .await?;
         user.ok_or_else(|| ModelError::EntityNotFound)
@@ -85,11 +81,7 @@ impl Model {
     /// When could not find user by the given token or DB query error
     pub async fn find_by_email(db: &DatabaseConnection, email: &str) -> ModelResult<Self> {
         let user = users::Entity::find()
-            .filter(
-                model::query::condition()
-                    .eq(users::Column::Email, email)
-                    .build(),
-            )
+            .filter(model::query::condition().eq(users::Column::Email, email).build())
             .one(db)
             .await?;
         user.ok_or_else(|| ModelError::EntityNotFound)
@@ -106,9 +98,7 @@ impl Model {
     ) -> ModelResult<Self> {
         let user = users::Entity::find()
             .filter(
-                model::query::condition()
-                    .eq(users::Column::EmailVerificationToken, token)
-                    .build(),
+                model::query::condition().eq(users::Column::EmailVerificationToken, token).build(),
             )
             .one(db)
             .await?;
@@ -122,11 +112,7 @@ impl Model {
     /// When could not find user by the given token or DB query error ot token expired
     pub async fn find_by_magic_token(db: &DatabaseConnection, token: &str) -> ModelResult<Self> {
         let user = users::Entity::find()
-            .filter(
-                query::condition()
-                    .eq(users::Column::MagicLinkToken, token)
-                    .build(),
-            )
+            .filter(query::condition().eq(users::Column::MagicLinkToken, token).build())
             .one(db)
             .await?;
 
@@ -158,11 +144,7 @@ impl Model {
     /// When could not find user by the given token or DB query error
     pub async fn find_by_reset_token(db: &DatabaseConnection, token: &str) -> ModelResult<Self> {
         let user = users::Entity::find()
-            .filter(
-                model::query::condition()
-                    .eq(users::Column::ResetToken, token)
-                    .build(),
-            )
+            .filter(model::query::condition().eq(users::Column::ResetToken, token).build())
             .one(db)
             .await?;
         user.ok_or_else(|| ModelError::EntityNotFound)
@@ -176,11 +158,7 @@ impl Model {
     pub async fn find_by_pid(db: &DatabaseConnection, pid: &str) -> ModelResult<Self> {
         let parse_uuid = Uuid::parse_str(pid).map_err(|e| ModelError::Any(e.into()))?;
         let user = users::Entity::find()
-            .filter(
-                model::query::condition()
-                    .eq(users::Column::Pid, parse_uuid)
-                    .build(),
-            )
+            .filter(model::query::condition().eq(users::Column::Pid, parse_uuid).build())
             .one(db)
             .await?;
         user.ok_or_else(|| ModelError::EntityNotFound)
@@ -193,11 +171,7 @@ impl Model {
     /// When could not find user by the given token or DB query error
     pub async fn find_by_api_key(db: &DatabaseConnection, api_key: &str) -> ModelResult<Self> {
         let user = users::Entity::find()
-            .filter(
-                model::query::condition()
-                    .eq(users::Column::ApiKey, api_key)
-                    .build(),
-            )
+            .filter(model::query::condition().eq(users::Column::ApiKey, api_key).build())
             .one(db)
             .await?;
         user.ok_or_else(|| ModelError::EntityNotFound)
@@ -226,11 +200,7 @@ impl Model {
         let txn = db.begin().await?;
 
         if users::Entity::find()
-            .filter(
-                model::query::condition()
-                    .eq(users::Column::Email, &params.email)
-                    .build(),
-            )
+            .filter(model::query::condition().eq(users::Column::Email, &params.email).build())
             .one(&txn)
             .await?
             .is_some()

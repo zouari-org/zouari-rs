@@ -58,13 +58,10 @@ async fn register(
                 "could not register user",
             );
             return format::json(());
-        }
+        },
     };
 
-    let user = user
-        .into_active_model()
-        .set_email_verification_sent(&ctx.db)
-        .await?;
+    let user = user.into_active_model().set_email_verification_sent(&ctx.db).await?;
 
     AuthMailer::send_welcome(&ctx, &user).await?;
 
@@ -105,10 +102,7 @@ async fn forgot(
         return format::json(());
     };
 
-    let user = user
-        .into_active_model()
-        .set_forgot_password_sent(&ctx.db)
-        .await?;
+    let user = user.into_active_model().set_forgot_password_sent(&ctx.db).await?;
 
     AuthMailer::forgot_password(&ctx, &user).await?;
 
@@ -125,9 +119,7 @@ async fn reset(State(ctx): State<AppContext>, Json(params): Json<ResetParams>) -
 
         return format::json(());
     };
-    user.into_active_model()
-        .reset_password(&ctx.db, &params.password)
-        .await?;
+    user.into_active_model().reset_password(&ctx.db, &params.password).await?;
 
     format::json(())
 }
@@ -136,10 +128,7 @@ async fn reset(State(ctx): State<AppContext>, Json(params): Json<ResetParams>) -
 #[debug_handler]
 async fn login(State(ctx): State<AppContext>, Json(params): Json<LoginParams>) -> Result<Response> {
     let Ok(user) = users::Model::find_by_email(&ctx.db, &params.email).await else {
-        tracing::debug!(
-            email = params.email,
-            "login attempt with non-existent email"
-        );
+        tracing::debug!(email = params.email, "login attempt with non-existent email");
         return unauthorized("Invalid credentials!");
     };
 
@@ -232,25 +221,16 @@ async fn resend_verification_email(
     Json(params): Json<ResendVerificationParams>,
 ) -> Result<Response> {
     let Ok(user) = users::Model::find_by_email(&ctx.db, &params.email).await else {
-        tracing::info!(
-            email = params.email,
-            "User not found for resend verification"
-        );
+        tracing::info!(email = params.email, "User not found for resend verification");
         return format::json(());
     };
 
     if user.email_verified_at.is_some() {
-        tracing::info!(
-            pid = user.pid.to_string(),
-            "User already verified, skipping resend"
-        );
+        tracing::info!(pid = user.pid.to_string(), "User already verified, skipping resend");
         return format::json(());
     }
 
-    let user = user
-        .into_active_model()
-        .set_email_verification_sent(&ctx.db)
-        .await?;
+    let user = user.into_active_model().set_email_verification_sent(&ctx.db).await?;
 
     AuthMailer::send_welcome(&ctx, &user).await?;
     tracing::info!(pid = user.pid.to_string(), "Verification email re-sent");
