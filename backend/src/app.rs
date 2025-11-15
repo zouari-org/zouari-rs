@@ -1,18 +1,18 @@
+use crate::config::load_config_from_infisical;
 use async_trait::async_trait;
 use loco_rs::{
+    Result,
     app::{AppContext, Hooks, Initializer},
     bgworker::{BackgroundWorker, Queue},
-    boot::{create_app, BootResult, StartMode},
+    boot::{BootResult, StartMode, create_app},
     config::Config,
     controller::AppRoutes,
     db::{self, truncate_table},
     environment::Environment,
     task::Tasks,
-    Result,
 };
 use migration::Migrator;
 use std::path::Path;
-use crate::config::load_config_from_infisical;
 
 #[allow(unused_imports)]
 use crate::{controllers, models::_entities::users, tasks, workers::downloader::DownloadWorker};
@@ -28,9 +28,7 @@ impl Hooks for App {
         format!(
             "{} ({})",
             env!("CARGO_PKG_VERSION"),
-            option_env!("BUILD_SHA")
-                .or(option_env!("GITHUB_SHA"))
-                .unwrap_or("dev")
+            option_env!("BUILD_SHA").or(option_env!("GITHUB_SHA")).unwrap_or("dev")
         )
     }
 

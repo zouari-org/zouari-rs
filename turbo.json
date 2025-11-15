@@ -8,10 +8,12 @@
       "outputs": ["backend/target/release/app"]
     },
     "//backend:test": {
-      "inputs": ["backend/**", "!backend/target/**"]
+      "inputs": ["backend/**", "!backend/target/**"],
+      "outputs": []
     },
     "//backend:lint": {
-      "inputs": ["backend/**", "!backend/target/**"]
+      "inputs": ["backend/**", "!backend/target/**"],
+      "outputs": []
     },
     "build": {
       "dependsOn": ["//backend:build", "^build"],
@@ -22,11 +24,15 @@
       "persistent": true
     },
     "test": {
-      "dependsOn": ["//backend:test"],
+      "dependsOn": ["//backend:test", "^test"],
       "outputs": []
     },
     "lint": {
-      "dependsOn": ["//backend:lint"],
+      "dependsOn": ["//backend:lint", "^lint"],
+      "outputs": []
+    },
+    "format": {
+      "dependsOn": ["^format"],
       "outputs": []
     }
   }

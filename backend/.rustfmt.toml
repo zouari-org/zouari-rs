@@ -1,2 +1,29 @@
+# Stable-channel compatible rustfmt configuration
+# Prioritizes readability and clean diffs using stable options.
+edition = "2021"
 max_width = 100
-use_small_heuristics = "Default"
+
+# ---- Diffs & Heuristics ----
+# "Max" prevents aggressive re-formatting, keeping diffs cleaner
+# than your original "Default".
+use_small_heuristics = "Max"
+
+# ---- Imports ----
+# Enforce a standard import order (stable version).
+reorder_imports = true
+
+# ---- Readability & Layout ----
+# Prefer vertical layout for function parameters on multiple lines.
+fn_params_layout = "Tall"
+
+# ---- Idioms ----
+# Enforce modern, concise Rust idioms.
+use_field_init_shorthand = true
+use_try_shorthand = true
+
+# ---- Other Style ----
+# Merge multiple `#[derive(...)]` attributes into one.
+merge_derives = true
+
+# Add a trailing comma to match blocks (stable version).
+match_block_trailing_comma = true
