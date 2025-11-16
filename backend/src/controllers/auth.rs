@@ -6,6 +6,7 @@ use crate::{
     },
     views::auth::{CurrentResponse, LoginResponse},
 };
+use loco_openapi::prelude::*;
 use loco_rs::prelude::*;
 use regex::Regex;
 use serde::{Deserialize, Serialize};
@@ -19,29 +20,39 @@ fn get_allow_email_domain_re() -> &'static Regex {
     })
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, ToSchema)]
 pub struct ForgotParams {
     pub email: String,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, ToSchema)]
 pub struct ResetParams {
     pub token: String,
     pub password: String,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, ToSchema)]
 pub struct MagicLinkParams {
     pub email: String,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, ToSchema)]
 pub struct ResendVerificationParams {
     pub email: String,
 }
 
 /// Register function creates a new user with the given parameters and sends a
 /// welcome email to the user
+#[utoipa::path(
+    post,
+    path = "/api/auth/register",
+    request_body = RegisterParams,
+    responses(
+        (status = 200, description = "User registered. Verification email sent."),
+        (status = 400, description = "Invalid input")
+    ),
+    security(())
+)]
 #[debug_handler]
 async fn register(
     State(ctx): State<AppContext>,
@@ -70,6 +81,18 @@ async fn register(
 
 /// Verify register user. if the user not verified his email, he can't login to
 /// the system.
+#[utoipa::path(
+    get,
+    path = "/api/auth/verify/{token}",
+    params(
+        ("token" = String, Path, description = "Email verification token")
+    ),
+    responses(
+        (status = 200, description = "Email verified successfully"),
+        (status = 401, description = "Invalid or expired token")
+    ),
+    security(())
+)]
 #[debug_handler]
 async fn verify(State(ctx): State<AppContext>, Path(token): Path<String>) -> Result<Response> {
     let Ok(user) = users::Model::find_by_verification_token(&ctx.db, &token).await else {
@@ -91,6 +114,15 @@ async fn verify(State(ctx): State<AppContext>, Path(token): Path<String>) -> Res
 /// and send email to the user. In case the email not found in our DB, we are
 /// returning a valid request for for security reasons (not exposing users DB
 /// list).
+#[utoipa::path(
+    post,
+    path = "/api/auth/forgot",
+    request_body = ForgotParams,
+    responses(
+        (status = 200, description = "Forgot password email sent (if user exists)")
+    ),
+    security(())
+)]
 #[debug_handler]
 async fn forgot(
     State(ctx): State<AppContext>,
@@ -110,6 +142,16 @@ async fn forgot(
 }
 
 /// reset user password by the given parameters
+#[utoipa::path(
+    post,
+    path = "/api/auth/reset",
+    request_body = ResetParams,
+    responses(
+        (status = 200, description = "Password has been reset successfully"),
+        (status = 400, description = "Invalid token or request")
+    ),
+    security(())
+)]
 #[debug_handler]
 async fn reset(State(ctx): State<AppContext>, Json(params): Json<ResetParams>) -> Result<Response> {
     let Ok(user) = users::Model::find_by_reset_token(&ctx.db, &params.token).await else {
@@ -125,6 +167,16 @@ async fn reset(State(ctx): State<AppContext>, Json(params): Json<ResetParams>) -
 }
 
 /// Creates a user login and returns a token
+#[utoipa::path(
+    post,
+    path = "/api/auth/login",
+    request_body = LoginParams,
+    responses(
+        (status = 200, description = "Login successful", body = LoginResponse),
+        (status = 401, description = "Invalid credentials")
+    ),
+    security(())
+)]
 #[debug_handler]
 async fn login(State(ctx): State<AppContext>, Json(params): Json<LoginParams>) -> Result<Response> {
     let Ok(user) = users::Model::find_by_email(&ctx.db, &params.email).await else {
@@ -147,6 +199,16 @@ async fn login(State(ctx): State<AppContext>, Json(params): Json<LoginParams>) -
     format::json(LoginResponse::new(&user, &token))
 }
 
+/// Get the currently authenticated user
+#[utoipa::path(
+    get,
+    path = "/api/auth/current",
+    responses(
+        (status = 200, description = "Current user data", body = CurrentResponse),
+        (status = 401, description = "Unauthorized")
+    ),
+    security(("jwt_token" = [])) // This requires JWT auth!
+)]
 #[debug_handler]
 async fn current(auth: auth::JWT, State(ctx): State<AppContext>) -> Result<Response> {
     let user = users::Model::find_by_pid(&ctx.db, &auth.claims.pid).await?;
@@ -167,6 +229,16 @@ async fn current(auth: auth::JWT, State(ctx): State<AppContext>) -> Result<Respo
 ///    If invalid or expired, an unauthorized response is returned.
 ///
 /// This flow enhances security by avoiding traditional passwords and providing a seamless login experience.
+#[utoipa::path(
+    post,
+    path = "/api/auth/magic-link",
+    request_body = MagicLinkParams,
+    responses(
+        (status = 200, description = "Magic link sent (if user exists and domain is valid)"),
+        (status = 400, description = "Invalid email domain")
+    ),
+    security(())
+)]
 async fn magic_link(
     State(ctx): State<AppContext>,
     Json(params): Json<MagicLinkParams>,
@@ -194,6 +266,18 @@ async fn magic_link(
 }
 
 /// Verifies a magic link token and authenticates the user.
+#[utoipa::path(
+    get,
+    path = "/api/auth/magic-link/{token}",
+    params(
+        ("token" = String, Path, description = "Magic link token")
+    ),
+    responses(
+        (status = 200, description = "Magic link login successful", body = LoginResponse),
+        (status = 401, description = "Invalid or expired magic link")
+    ),
+    security(())
+)]
 async fn magic_link_verify(
     Path(token): Path<String>,
     State(ctx): State<AppContext>,
@@ -215,6 +299,16 @@ async fn magic_link_verify(
     format::json(LoginResponse::new(&user, &token))
 }
 
+/// Resend the verification email
+#[utoipa::path(
+    post,
+    path = "/api/auth/resend-verification-mail",
+    request_body = ResendVerificationParams,
+    responses(
+        (status = 200, description = "Verification email re-sent (if user exists and is not verified)")
+    ),
+    security(())
+)]
 #[debug_handler]
 async fn resend_verification_email(
     State(ctx): State<AppContext>,
@@ -241,13 +335,13 @@ async fn resend_verification_email(
 pub fn routes() -> Routes {
     Routes::new()
         .prefix("/api/auth")
-        .add("/register", post(register))
-        .add("/verify/{token}", get(verify))
-        .add("/login", post(login))
-        .add("/forgot", post(forgot))
-        .add("/reset", post(reset))
-        .add("/current", get(current))
-        .add("/magic-link", post(magic_link))
-        .add("/magic-link/{token}", get(magic_link_verify))
-        .add("/resend-verification-mail", post(resend_verification_email))
+        .add("/register", openapi(post(register), routes!(register)))
+        .add("/verify/{token}", openapi(get(verify), routes!(verify)))
+        .add("/login", openapi(post(login), routes!(login)))
+        .add("/forgot", openapi(post(forgot), routes!(forgot)))
+        .add("/reset", openapi(post(reset), routes!(reset)))
+        .add("/current", openapi(get(current), routes!(current)))
+        .add("/magic-link", openapi(post(magic_link), routes!(magic_link)))
+        .add("/magic-link/{token}", openapi(get(magic_link_verify), routes!(magic_link_verify)))
+        .add("/resend-verification-mail", openapi(post(resend_verification_email), routes!(resend_verification_email)))
 }
