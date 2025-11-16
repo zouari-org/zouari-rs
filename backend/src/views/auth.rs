@@ -1,8 +1,8 @@
+use loco_openapi::prelude::*;
 use serde::{Deserialize, Serialize};
-
 use crate::models::_entities::users;
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, ToSchema)]
 pub struct LoginResponse {
     pub token: String,
     pub pid: String,
@@ -22,7 +22,7 @@ impl LoginResponse {
     }
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, ToSchema)]
 pub struct CurrentResponse {
     pub pid: String,
     pub name: String,
