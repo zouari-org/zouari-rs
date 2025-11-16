@@ -2,7 +2,7 @@
 
 [package]
 name = "backend"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2024"
 publish = false
 default-run = "backend-cli"
@@ -35,8 +35,6 @@ validator = { version = "0.20" }
 uuid = { version = "1.6", features = ["v4"] }
 include_dir = { version = "0.7" }
 axum-extra = { version = "0.10", features = ["form"] }
-infisical = "0.0.3"
-figment = { version = "0.10.19", features = ["env"] }
 
 [[bin]]
 name = "backend-cli"

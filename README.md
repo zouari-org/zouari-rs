@@ -18,7 +18,7 @@ This is a polyglot monorepo managed by `pnpm`, `Turborepo`, and `Cargo`.
 | **Job Queue** | Sidekiq-rs | First-class integration with `loco-rs`. |
 | **Auth** | `loco-rs` Auth | Generators scaffold all auth routes, logic, and models. |
 | **API** | REST + OpenAPI | Formal contract for a strong-typed frontend client. |
-| **Secrets** | `infisical-sdk-rust` | Implements our "Secret Zero" pattern. |
+| **Secrets** | **Infisical CLI (`infisical run`)** | Implements our "Zero Secret" pattern via CLI injection. |
 
 ## 🛠️ Prerequisites
 
@@ -28,38 +28,32 @@ All developers must have the following tools installed:
 * `sea-orm` CLI
 * Node.js & pnpm
 * Docker & Docker Compose
+* `infisical` CLI (for secret management)
 
 ## 🏃 Local Development
 
-1.  **Start Services:** Run the local database and Redis:
+This project uses **Infisical** to manage all environment variables. The `infisical run` command injects secrets directly into the running process.
+
+1.  **Login to Infisical:**
+    First, authenticate using Machine Identity Authentication to get a temporary token.
     ```bash
-    cd backend
-    docker-compose up -d
-    cd .. 
+    export INFISICAL_TOKEN=$(infisical login --method=universal-auth --client-id=<identity-client-id> --client-secret=<identity-client-secret> --silent --plain)
     ```
-2.  **Inject Secrets:** Export your "Secret Zero" variables from Infisical for the `dev` environment.
+
+2.  **Start Docker Services:**
+    From the root directory, run the Docker Compose services (Postgres, Redis, etc.) with their secrets injected from the `/compose` path.
     ```bash
-    export INFISICAL_CLIENT_ID=...
-    export INFISICAL_CLIENT_SECRET=...
-    export INFISICAL_PROJECT_ID=...
-    export INFISICAL_ENVIRONMENT=dev
+    infisical run --projectId=<project-id> --path="/compose" --domain [https://infisical.zouari.org](https://infisical.zouari.org) --command="docker compose up -d"
     ```
-3.  **Run Migrations:**
+
+3.  **Run Backend (Hot-Reload):**
+    In a new terminal, run the Rust backend. Infisical will inject the secrets from the `/backend` path.
     ```bash
-    cd backend
-    cargo loco db migrate
-    cd ..
+    infisical run --projectId=<project-id> --path="/backend" --domain [https://infisical.zouari.org](https://infisical.zouari.org) --command="cd backend && cargo run watch"
     ```
-4.  **Run Backend (Hot-Reload):**
+
+4.  **Run Frontend (Hot-Reload):**
+    In a third terminal, run the Next.js frontend. Infisical will inject the secrets from the `/frontend` path.
     ```bash
-    cd backend
-    cargo loco start
-    # Backend running on http://localhost:5150
-    cd ..
-    ```
-5.  **Run Frontend (Hot-Reload):**
-    ```bash
-    # From monorepo root
-    pnpm --filter "web" dev
-    # Frontend running on http://localhost:3000
+    infisical run --projectId=<project-id> --path="/frontend" --domain [https://infisical.zouari.org](https://infisical.zouari.org) --command="cd apps/web && pnpm run dev"
     ```
