@@ -1,4 +1,3 @@
-use crate::config::load_config_from_infisical;
 use async_trait::async_trait;
 use loco_rs::{
     Result,
@@ -31,20 +30,6 @@ impl Hooks for App {
             option_env!("BUILD_SHA").or(option_env!("GITHUB_SHA")).unwrap_or("dev")
         )
     }
-
-    //
-    // --- THIS IS OUR NEW CONFIGURATION HOOK ---
-    //
-    async fn load_config(environment: &Environment) -> Result<Config> {
-        println!(
-            "Ignoring environment: '{}'. Loading config from Infisical...",
-            environment.to_string()
-        );
-        load_config_from_infisical().await
-    }
-    //
-    // --- END OF NEW HOOK ---
-    //
 
     async fn boot(
         mode: StartMode,
