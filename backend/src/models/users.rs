@@ -1,26 +1,33 @@
-use loco_openapi::prelude::*;
 use async_trait::async_trait;
 use chrono::{Duration, offset::Local};
+use loco_openapi::prelude::*;
 use loco_rs::{auth::jwt, hash, prelude::*};
 use serde::{Deserialize, Serialize};
 use serde_json::Map;
 use uuid::Uuid;
+use validator::Validate;
 
 pub use super::_entities::users::{self, ActiveModel, Entity, Model};
 
 pub const MAGIC_LINK_LENGTH: i8 = 32;
 pub const MAGIC_LINK_EXPIRATION_MIN: i8 = 5;
 
-#[derive(Debug, Deserialize, Serialize, ToSchema)]
+#[derive(Debug, Deserialize, Serialize, ToSchema, Validate)]
 pub struct LoginParams {
+    #[validate(email)]
+    #[schema(format = "email", example = "user@example.com")]
     pub email: String,
     pub password: String,
 }
 
-#[derive(Debug, Deserialize, Serialize, ToSchema)]
+#[derive(Debug, Deserialize, Serialize, ToSchema, Validate)]
 pub struct RegisterParams {
+    #[validate(email)]
+    #[schema(format = "email", example = "user@example.com")]
     pub email: String,
     pub password: String,
+    #[validate(length(min = 2))]
+    #[schema(min_length = 2)]
     pub name: String,
 }
 

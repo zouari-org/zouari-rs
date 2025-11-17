@@ -1,0 +1,58 @@
+{
+  "name": "@zouari-rs/validation",
+  "version": "2.1.0",
+  "private": true,
+  "description": "Centralized Zod validation schemas for the ZOUARI-RS project",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./env": {
+      "import": "./dist/env.js",
+      "types": "./dist/env.d.ts"
+    },
+    "./api": {
+      "import": "./dist/api-gen/zod.gen.js",
+      "types": "./dist/api-gen/zod.gen.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "pnpm run generate:schemas && tsc -p tsconfig.build.json",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "generate:schemas": "openapi-ts",
+    "lint": "pnpm biome lint .",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "validation",
+    "zod",
+    "schema",
+    "openapi",
+    "typescript"
+  ],
+  "author": "ZOUARI <support@zouari.org>",
+  "license": "MIT",
+  "dependencies": {
+    "zod": "^4.1.12",
+    "zod-validation-error": "^5.0.0"
+  },
+  "devDependencies": {
+    "@hey-api/openapi-ts": "^0.87.5",
+    "@types/node": "^24.10.1",
+    "@vitest/coverage-v8": "^4.0.10",
+    "@vitest/ui": "^4.0.10",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.10"
+  }
+}
