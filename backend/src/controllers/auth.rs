@@ -11,6 +11,7 @@ use loco_rs::prelude::*;
 use regex::Regex;
 use serde::{Deserialize, Serialize};
 use std::sync::OnceLock;
+use validator::Validate;
 
 pub static EMAIL_DOMAIN_RE: OnceLock<Regex> = OnceLock::new();
 
@@ -20,8 +21,10 @@ fn get_allow_email_domain_re() -> &'static Regex {
     })
 }
 
-#[derive(Debug, Deserialize, Serialize, ToSchema)]
+#[derive(Debug, Deserialize, Serialize, ToSchema, Validate)]
 pub struct ForgotParams {
+    #[validate(email)]
+    #[schema(format = "email", example = "user@example.com")]
     pub email: String,
 }
 
@@ -31,13 +34,17 @@ pub struct ResetParams {
     pub password: String,
 }
 
-#[derive(Debug, Deserialize, Serialize, ToSchema)]
+#[derive(Debug, Deserialize, Serialize, ToSchema, Validate)]
 pub struct MagicLinkParams {
+    #[validate(email)]
+    #[schema(format = "email", example = "user@example.com")]
     pub email: String,
 }
 
-#[derive(Debug, Deserialize, Serialize, ToSchema)]
+#[derive(Debug, Deserialize, Serialize, ToSchema, Validate)]
 pub struct ResendVerificationParams {
+    #[validate(email)]
+    #[schema(format = "email", example = "user@example.com")]
     pub email: String,
 }
 

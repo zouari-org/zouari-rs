@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // --- Overrides ---
+    "noEmit": false,
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    // --- Library Declarations ---
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true
+  },
+  // --- Overrides ---
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "tests"]
+}

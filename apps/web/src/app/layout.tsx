@@ -1,7 +1,7 @@
+import { ColorSchemeScript } from '@mantine/core';
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
-import React from 'react';
-import { ColorSchemeScript } from '@mantine/core';
+import type React from 'react';
 import { Providers } from './_components/providers';
 
 export const metadata = {
