@@ -53,6 +53,7 @@ pub struct ResendVerificationParams {
 #[utoipa::path(
     post,
     path = "/api/auth/register",
+    tag = "Auth",
     request_body = RegisterParams,
     responses(
         (status = 200, description = "User registered. Verification email sent."),
@@ -91,6 +92,7 @@ async fn register(
 #[utoipa::path(
     get,
     path = "/api/auth/verify/{token}",
+    tag = "Auth",
     params(
         ("token" = String, Path, description = "Email verification token")
     ),
@@ -124,6 +126,7 @@ async fn verify(State(ctx): State<AppContext>, Path(token): Path<String>) -> Res
 #[utoipa::path(
     post,
     path = "/api/auth/forgot",
+    tag = "Auth",
     request_body = ForgotParams,
     responses(
         (status = 200, description = "Forgot password email sent (if user exists)")
@@ -152,6 +155,7 @@ async fn forgot(
 #[utoipa::path(
     post,
     path = "/api/auth/reset",
+    tag = "Auth",
     request_body = ResetParams,
     responses(
         (status = 200, description = "Password has been reset successfully"),
@@ -177,6 +181,7 @@ async fn reset(State(ctx): State<AppContext>, Json(params): Json<ResetParams>) -
 #[utoipa::path(
     post,
     path = "/api/auth/login",
+    tag = "Auth",
     request_body = LoginParams,
     responses(
         (status = 200, description = "Login successful", body = LoginResponse),
@@ -210,6 +215,7 @@ async fn login(State(ctx): State<AppContext>, Json(params): Json<LoginParams>) -
 #[utoipa::path(
     get,
     path = "/api/auth/current",
+    tag = "Auth",
     responses(
         (status = 200, description = "Current user data", body = CurrentResponse),
         (status = 401, description = "Unauthorized")
@@ -239,6 +245,7 @@ async fn current(auth: auth::JWT, State(ctx): State<AppContext>) -> Result<Respo
 #[utoipa::path(
     post,
     path = "/api/auth/magic-link",
+    tag = "Auth",
     request_body = MagicLinkParams,
     responses(
         (status = 200, description = "Magic link sent (if user exists and domain is valid)"),
@@ -276,6 +283,7 @@ async fn magic_link(
 #[utoipa::path(
     get,
     path = "/api/auth/magic-link/{token}",
+    tag = "Auth",
     params(
         ("token" = String, Path, description = "Magic link token")
     ),
@@ -310,6 +318,7 @@ async fn magic_link_verify(
 #[utoipa::path(
     post,
     path = "/api/auth/resend-verification-mail",
+    tag = "Auth",
     request_body = ResendVerificationParams,
     responses(
         (status = 200, description = "Verification email re-sent (if user exists and is not verified)")

@@ -1,4 +1,4 @@
-import { frontendSchema } from '@zouari-rs/validation'; // Imports from index.ts
+import { frontendSchema } from '@zouari-rs/validation';
 import type { NextConfig } from 'next';
 import { z } from 'zod';
 
@@ -22,9 +22,7 @@ const webServerSchema = frontendSchema.extend({
 try {
   webServerSchema.parse(process.env);
 } catch (err) {
-  console.error(
-    '❌ Invalid environment configuration for apps/web',
-  );
+  console.error('❌ Invalid environment configuration for apps/web');
   if (err instanceof z.ZodError) {
     // This prints a readable error tree directly
     console.error(z.treeifyError(err));
