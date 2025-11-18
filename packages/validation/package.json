@@ -1,6 +1,6 @@
 {
   "name": "@zouari-rs/validation",
-  "version": "2.1.0",
+  "version": "3.2.0",
   "private": true,
   "description": "Centralized Zod validation schemas for the ZOUARI-RS project",
   "type": "module",

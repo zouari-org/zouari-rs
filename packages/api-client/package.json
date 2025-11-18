@@ -1,19 +1,19 @@
 {
   "name": "@zouari-rs/api-client",
-  "version": "3.0.0",
-  "description": "Auto-generated OpenAPI client for the ZOUARI-RS API.",
+  "version": "3.2.0",
+  "description": "Auto-generated OpenAPI client for the ZOUARI API.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "openapi-typescript-codegen -i openapi.json -o src --use-client",
+    "build": "rm -rf src && openapi -i ../validation/openapi.json -o src --name Client && tsc",
     "postbuild": "tsc",
     "dev": "tsc --watch",
     "lint": "echo 'No lint'",
     "test": "echo 'No test'"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "ZOUARI <support@zouari.org>",
+  "license": "MIT",
   "devDependencies": {
     "openapi-typescript-codegen": "^0.29.0",
     "typescript": "^5.9.3"
