@@ -1,6 +1,11 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["backend/Cargo.lock"],
+  "globalEnv": [
+    "AUTH_SECRET",
+    "NEXT_PUBLIC_API_URL",
+    "NODE_ENV"
+  ],
   "tasks": {
     "//backend:build": {
       "cache": false,
@@ -18,14 +23,14 @@
     "build": {
       "dependsOn": ["//backend:build", "^build"],
       "outputs": [
-        "apps/web/.next/**",
-        "packages/api-client/dist/**",
-        "packages/validation/dist/**"
+        ".next/**",
+        "dist/**"
       ]
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "dependsOn": ["^build"]
     },
     "test": {
       "dependsOn": ["//backend:test", "^test"],

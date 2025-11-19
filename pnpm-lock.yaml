@@ -9,7 +9,7 @@ importers:
   .:
     devDependencies:
       '@biomejs/biome':
-        specifier: ^2.3.5
+        specifier: ^2.3.6
         version: 2.3.6
       turbo:
         specifier: ^2.6.1
@@ -83,6 +83,10 @@ importers:
         version: 5.9.3
 
   packages/api-client:
+    dependencies:
+      '@zouari-rs/validation':
+        specifier: workspace:*
+        version: link:../validation
     devDependencies:
       openapi-typescript-codegen:
         specifier: ^0.29.0

@@ -6,6 +6,10 @@
     "rootDir": "./src",
     "outDir": "./dist",
 
+    // --- Module Resolution ---
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
     // --- Library Declarations ---
     "declaration": true,
     "declarationMap": true,
