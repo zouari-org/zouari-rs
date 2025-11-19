@@ -1,59 +1,64 @@
-# ZOUARI-RS Enterprise Stack
+## Project Overview
 
-This repository contains the "v3" enterprise stack for ZOUARI applications. It is a modern, high-performance, and secure stack built on Rust.
+* **Introduction:** This repository hosts the v3 **ZOUARI Enterprise Stack**, engineered for high performance, security, and developer velocity. It is implemented as a polyglot monorepo leveraging the reliability of Rust for the core backend services.
 
-The primary goal is to leverage the performance and reliability of Rust while maintaining high developer velocity, similar to a "batteries-included" framework.
+---
 
-## 🥞 Core Stack
+## Architectural Overview
 
-This is a polyglot monorepo managed by `pnpm`, `Turborepo`, and `Cargo`.
+* **The Core Stack:** The stack is a modern polyglot monorepo orchestrated by **Turborepo** and Rust's **Cargo** to manage build dependencies and caching across the entire repository.
 
-| Component | v3 Implementation | Rationale |
-| :--- | :--- | :--- |
-| **Monorepo** | pnpm + Turborepo + Cargo | Turborepo orchestrates both TS and Rust workspaces. |
-| **Frontend** | Next.js + Mantine | Mantine provides a rich, pre-built component library. |
-| **Backend** | `loco-rs` (CoC Framework) | Provides Rails-like "magic" and developer velocity. |
-| **Web Server**| Axum | `loco-rs` uses Axum, giving us top-tier performance. |
-| **ORM** | SeaORM (Active Record) | `loco-rs` is built on SeaORM. |
-| **Job Queue** | Sidekiq-rs | First-class integration with `loco-rs`. |
-| **Auth** | `loco-rs` Auth | Generators scaffold all auth routes, logic, and models. |
-| **API** | REST + OpenAPI | Formal contract for a strong-typed frontend client. |
-| **Secrets** | **Infisical CLI (`infisical run`)** | Implements our "Zero Secret" pattern via CLI injection. |
+* **Key Component Decisions:**
+    * **Monorepo Orchestration:** **Turborepo** - Provides unified command execution, caching, and explicit task dependency management.
+    * **Frontend Framework:** **Next.js (App Router) + Mantine** - Offers a fast, server-capable web application with a comprehensive UI/form library.
+    * **Backend Core:** **loco-rs (Rust CoC Framework)** - Delivers Rails-like developer velocity combined with the performance and security of Rust.
+    * **API Contract:** **REST + OpenAPI** - Enforces a formal, type-safe contract, enabling auto-generation of the `@zouari-rs/api-client`.
+    * **Secret Management:** **Infisical CLI (infisical run)** - Implements a **Zero Secret** pattern, injecting environment variables directly at runtime for enhanced security.
 
-## 🛠️ Prerequisites
+---
 
-All developers must have the following tools installed:
-* Rust & Cargo
-* `cargo-loco` CLI
-* `sea-orm` CLI
-* Node.js & pnpm
-* Docker & Docker Compose
-* `infisical` CLI (for secret management)
+## Prerequisites
 
-## 🏃 Local Development
+* **Required Tools for Local Development:** The following tools must be installed and available in your environment's PATH:
+    * Rust & Cargo (Latest stable toolchain)
+    * `cargo-loco` CLI
+    * `sea-orm` CLI
+    * Node.js (v20+) & **pnpm** (as the primary package manager)
+    * Docker & Docker Compose (for infrastructure services)
+    * `infisical` CLI (for secret management)
 
-This project uses **Infisical** to manage all environment variables. The `infisical run` command injects secrets directly into the running process.
+---
 
-1.  **Login to Infisical:**
-    First, authenticate using Machine Identity Authentication to get a temporary token.
-    ```bash
-    export INFISICAL_TOKEN=$(infisical login --method=universal-auth --client-id=<identity-client-id> --client-secret=<identity-client-secret> --silent --plain)
-    ```
+## Local Development Setup
 
-2.  **Start Docker Services:**
-    From the root directory, run the Docker Compose services (Postgres, Redis, etc.) with their secrets injected from the `/compose` path.
-    ```bash
-    infisical run --projectId=<project-id> --path="/compose" --domain [https://infisical.zouari.org](https://infisical.zouari.org) --command="docker compose up -d"
-    ```
+* **Key Concept: Zero Secret Development**
+    The development environment is initiated using the **infisical run** wrapper for secure, context-specific secret injection. Note that separate commands are required for services with different secret scopes.
 
-3.  **Run Backend (Hot-Reload):**
-    In a new terminal, run the Rust backend. Infisical will inject the secrets from the `/backend` path.
-    ```bash
-    infisical run --projectId=<project-id> --path="/backend" --domain [https://infisical.zouari.org](https://infisical.zouari.org) --command="cd backend && cargo run watch"
-    ```
+### 1. Authenticate & Start Infrastructure
 
-4.  **Run Frontend (Hot-Reload):**
-    In a third terminal, run the Next.js frontend. Infisical will inject the secrets from the `/frontend` path.
-    ```bash
-    infisical run --projectId=<project-id> --path="/frontend" --domain [https://infisical.zouari.org](https://infisical.zouari.org) --command="cd apps/web && pnpm run dev"
-    ```
+* **Step 1.1: Authenticate Session**
+    Authenticate your session to retrieve the necessary token for secret injection.
+    `export INFISICAL_TOKEN=$(infisical login --method=universal-auth --client-id=<identity-client-id> --client-secret=<identity-client-secret> --silent --plain)`
+
+* **Step 1.2: Start Infrastructure**
+    Start the infrastructure services (Postgres, Redis, etc.).
+    `infisical run --projectId=<project-id> --path="/compose" --domain https://infisical.zouari.org --command="docker compose up -d"`
+
+### 2. Start Application Services (Hot-Reload)
+
+* In separate terminals, start the backend and frontend services. **Turborepo ensures all required internal packages are automatically built** before the applications launch, guaranteeing a smooth startup.
+
+* **Step 2.1: Start Backend**
+    (Injects backend secrets from `/backend` and runs `cargo run watch` for hot-reloading)
+    `infisical run --projectId=<project-id> --path="/backend" --domain https://infisical.zouari.org --command="cd backend && cargo run watch"`
+
+* **Step 2.2: Start Frontend**
+    (Injects frontend secrets from `/frontend` and runs the Next.js dev server)
+    `infisical run --projectId=<project-id> --path="/frontend" --domain https://infisical.zouari.org --command="cd apps/web && pnpm run dev"`
+
+---
+
+## Access Points
+
+* **Web Application:** `http://localhost:3000` - Frontend is running with Fast Refresh/HMR enabled.
+* **Backend API:** `http://localhost:5150/api` - Rust server is running with hot-reload.
