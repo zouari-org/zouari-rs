@@ -1,0 +1,52 @@
+.root {
+  background-color: var(--zouari-surface);
+}
+
+.header {
+  margin-bottom: rem(8px);
+}
+
+.title {
+  color: var(--zouari-text-primary);
+  font-size: rem(36px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: rem(24px);
+}
+
+.item {
+  display: flex;
+  gap: rem(16px);
+  align-items: flex-start;
+}
+
+.itemIcon {
+  width: rem(32px);
+  height: rem(32px);
+  border-radius: 50%;
+  background: var(--zouari-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+  margin-top: rem(2px);
+}
+
+.itemTitle {
+  color: var(--zouari-text-primary);
+  font-weight: 600;
+  font-size: rem(16px);
+  margin-bottom: rem(4px);
+}
+
+.itemDescription {
+  color: var(--zouari-text-secondary);
+  font-size: rem(15px);
+  line-height: 1.6;
+}

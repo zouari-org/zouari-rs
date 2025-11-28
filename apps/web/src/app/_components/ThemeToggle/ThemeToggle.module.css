@@ -1,0 +1,55 @@
+.toggle {
+  width: rem(40px);
+  height: rem(40px);
+  border-radius: rem(10px);
+  background: var(--zouari-surface-elevated);
+  border: 1px solid var(--zouari-border);
+  color: var(--zouari-text-secondary);
+  transition: 
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease,
+    transform 150ms ease;
+  box-shadow: var(--zouari-shadow-sm);
+}
+
+.toggle:hover {
+  background: var(--zouari-primary-light);
+  border-color: var(--zouari-primary);
+  color: var(--zouari-primary);
+  transform: scale(1.05);
+}
+
+.toggle:active {
+  transform: scale(0.95);
+}
+
+/* Sun icon - visible in dark mode */
+.sunIcon {
+  display: none;
+}
+
+/* Moon icon - visible in light mode */
+.moonIcon {
+  display: block;
+}
+
+/* Dark mode: show sun, hide moon */
+:global([data-mantine-color-scheme='dark']) .sunIcon {
+  display: block;
+}
+
+:global([data-mantine-color-scheme='dark']) .moonIcon {
+  display: none;
+}
+
+/* Optional: Add animation on icon switch */
+.sunIcon,
+.moonIcon {
+  transition: transform 200ms ease;
+}
+
+.toggle:hover .sunIcon,
+.toggle:hover .moonIcon {
+  transform: rotate(15deg);
+}
