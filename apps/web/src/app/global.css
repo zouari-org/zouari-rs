@@ -1,0 +1,69 @@
+:root {
+  /* Light Mode */
+  --zouari-bg: #FFFFFF;
+  --zouari-surface: #F6F8FB;
+  --zouari-surface-elevated: #FFFFFF;
+  --zouari-border: #D0D6E1;
+  --zouari-border-subtle: #E8ECF2;
+  --zouari-text-primary: #101726;
+  --zouari-text-secondary: #4A5367;
+  --zouari-text-tertiary: #6B7280;
+  --zouari-primary: #3B71B8;
+  --zouari-primary-hover: #2D5A94;
+  --zouari-primary-light: rgba(59, 113, 184, 0.08);
+  --zouari-navy: #101726;
+  --zouari-slate: #2A3243;
+  --zouari-teal: #1FA7A4;
+  --zouari-teal-light: rgba(31, 167, 164, 0.1);
+  --zouari-alert-red: #D64545;
+  --zouari-success: #10B981;
+
+  /* Shadows - Light */
+  --zouari-shadow-sm: 0 1px 2px rgba(16, 23, 38, 0.04);
+  --zouari-shadow-md: 0 4px 12px rgba(16, 23, 38, 0.08);
+  --zouari-shadow-lg: 0 8px 24px rgba(16, 23, 38, 0.12);
+  --zouari-shadow-card: 0 1px 3px rgba(16, 23, 38, 0.06), 0 4px 12px rgba(16, 23, 38, 0.04);
+  --zouari-shadow-card-hover: 0 4px 16px rgba(16, 23, 38, 0.1), 0 8px 32px rgba(16, 23, 38, 0.08);
+}
+
+[data-mantine-color-scheme='dark'] {
+  /* Dark Mode */
+  --zouari-bg: #0A0E15;
+  --zouari-surface: #101726;
+  --zouari-surface-elevated: #1A2332;
+  --zouari-border: #2A3243;
+  --zouari-border-subtle: #1E2738;
+  --zouari-text-primary: #F4F7FB;
+  --zouari-text-secondary: #C5CCDA;
+  --zouari-text-tertiary: #9BA5B6;
+  --zouari-primary: #6696D5;
+  --zouari-primary-hover: #7BA8E0;
+  --zouari-primary-light: rgba(102, 150, 213, 0.12);
+  --zouari-navy: #AAB7CE;
+  --zouari-slate: #9BA5B6;
+  --zouari-teal: #45C8C4;
+  --zouari-teal-light: rgba(69, 200, 196, 0.12);
+  --zouari-alert-red: #F07070;
+  --zouari-success: #34D399;
+  --logo-bg: #e9edf7; /* transparent navy circle */
+
+  /* Shadows - Dark */
+  --zouari-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --zouari-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --zouari-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --zouari-shadow-card: 0 1px 3px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15);
+  --zouari-shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.3), 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* Base styles */
+body {
+  background-color: var(--zouari-bg);
+  color: var(--zouari-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Reset link styling for buttons */
+a.zouari-btn {
+  text-decoration: none;
+}

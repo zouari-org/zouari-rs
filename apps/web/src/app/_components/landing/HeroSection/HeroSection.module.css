@@ -1,0 +1,104 @@
+.root {
+  background: light-dark(
+    linear-gradient(180deg, var(--zouari-surface) 0%, var(--zouari-bg) 100%),
+    linear-gradient(180deg, var(--zouari-primary) 0%, var(--zouari-bg) 100%)
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+.root::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 20% 50%, var(--zouari-primary-light) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, var(--zouari-teal-light) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+.subtitle {
+  color: var(--zouari-primary);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: rem(14px);
+}
+
+.description {
+  color: var(--zouari-text-secondary);
+  font-size: rem(18px);
+  line-height: 1.75;
+  max-width: rem(640px);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(8px);
+  background: var(--zouari-primary);
+  color: white;
+  font-weight: 600;
+  padding: rem(14px) rem(28px);
+  border-radius: rem(8px);
+  text-decoration: none;
+  font-size: rem(15px);
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+
+.cta:hover {
+  background: var(--zouari-primary-hover);
+  transform: translateY(-1px);
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: rem(32px);
+  margin-top: rem(48px);
+  padding-top: rem(48px);
+  border-top: 1px solid var(--zouari-border);
+  max-width: rem(480px);
+}
+
+.statItem {
+  text-align: left;
+}
+
+.statValue {
+  color: var(--zouari-primary);
+  font-size: rem(32px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.statLabel {
+  color: var(--zouari-text-tertiary);
+  font-size: rem(13px);
+  font-weight: 500;
+  margin-top: rem(8px);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.logoWrapper {
+  border-left: 1px solid var(--zouari-primary);
+}
+
+@media (max-width: mantine-breakpoint-sm) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: rem(24px);
+    text-align: center;
+  }
+
+  .statItem {
+    text-align: center;
+  }
+}

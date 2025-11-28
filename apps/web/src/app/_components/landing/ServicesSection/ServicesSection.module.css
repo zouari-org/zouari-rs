@@ -1,0 +1,106 @@
+.root {
+  background-color: var(--zouari-surface);
+}
+
+.header {
+  margin-bottom: rem(16px);
+}
+
+.title {
+  color: var(--zouari-text-primary);
+  font-size: rem(36px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: rem(12px);
+}
+
+.subtitle {
+  color: var(--zouari-text-secondary);
+  font-size: rem(18px);
+  line-height: 1.6;
+  max-width: rem(640px);
+}
+
+/* Feature Card */
+.card {
+  background: var(--zouari-surface-elevated);
+  border: 1px solid var(--zouari-border);
+  border-radius: rem(12px);
+  padding: rem(32px);
+  height: 100%;
+  position: relative;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: rem(24px);
+  right: rem(24px);
+  height: 3px;
+  background: linear-gradient(90deg, var(--zouari-primary) 0%, var(--zouari-teal) 100%);
+  border-radius: 0 0 2px 2px;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--zouari-shadow-card-hover);
+  border-color: var(--zouari-primary);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.cardIcon {
+  width: rem(48px);
+  height: rem(48px);
+  border-radius: rem(10px);
+  background: var(--zouari-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: rem(20px);
+  color: var(--zouari-primary);
+}
+
+.cardTitle {
+  color: var(--zouari-text-primary);
+  font-weight: 600;
+  font-size: rem(18px);
+  margin: 0 0 rem(12px) 0;
+  letter-spacing: -0.01em;
+}
+
+.cardDescription {
+  color: var(--zouari-text-secondary);
+  font-size: rem(15px);
+  line-height: 1.65;
+  margin: 0 0 rem(20px) 0;
+}
+
+.capabilityList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: rem(8px);
+}
+
+.capabilityItem {
+  display: flex;
+  align-items: center;
+  gap: rem(8px);
+  color: var(--zouari-text-tertiary);
+  font-size: rem(13px);
+  font-weight: 500;
+}
+
+.checkIcon {
+  color: var(--zouari-teal);
+  flex-shrink: 0;
+}

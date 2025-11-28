@@ -1,9 +1,25 @@
-import { LoginForm } from './_components/auth/LoginForm';
+import { Header } from './_components/Header';
+import { 
+  CtaFooter,
+  HeroSection ,
+  PromiseSection,
+  ServicesSection,
+  TrustSection,
+  WhoWeAreSection
+} from './_components/landing/';
 
 export default function Home() {
   return (
-    <main>
-      <LoginForm />
+    <>
+    <Header />
+    <main style={{ paddingTop: 64 }}>
+      <HeroSection />
+      <WhoWeAreSection />
+      <ServicesSection />
+      <TrustSection />
+      <PromiseSection />
+      <CtaFooter />
     </main>
+    </>
   );
 }

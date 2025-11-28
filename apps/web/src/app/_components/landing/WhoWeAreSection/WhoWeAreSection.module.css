@@ -1,0 +1,57 @@
+.root {
+  background-color: var(--zouari-bg);
+  border-top: 1px solid var(--zouari-border);
+}
+
+.header {
+  margin-bottom: rem(48px);
+}
+
+.title {
+  color: var(--zouari-text-primary);
+  font-size: rem(36px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: rem(12px);
+}
+
+.body {
+  color: var(--zouari-text-secondary);
+  font-size: rem(18px);
+  line-height: 1.7;
+  white-space: pre-line;
+  max-width: rem(640px);
+}
+
+.highlightsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: rem(32px);
+  margin-top: rem(48px);
+}
+
+.highlightItem {
+  padding: rem(24px);
+  padding-left: rem(20px);
+  border-left: 2px solid var(--zouari-primary);
+}
+
+.highlightTitle {
+  color: var(--zouari-text-primary);
+  font-weight: 600;
+  font-size: rem(15px);
+  margin-bottom: rem(8px);
+}
+
+.highlightDescription {
+  color: var(--zouari-text-secondary);
+  font-size: rem(14px);
+  line-height: 1.6;
+}
+
+@media (max-width: mantine-breakpoint-md) {
+  .highlightsGrid {
+    grid-template-columns: 1fr;
+    gap: rem(16px);
+  }
+}
