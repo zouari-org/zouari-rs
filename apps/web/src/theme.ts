@@ -1,116 +1,70 @@
 'use client';
 
-import { createTheme, type MantineTheme, rem } from '@mantine/core';
+import { createTheme, rem } from '@mantine/core';
 
 export const theme = createTheme({
   /**
-   * Colors
-   * Mantine expects an array of 10 shades for every custom color.
-   * We define 'zouariPrimary' using the blue shades from your providers.tsx.
+   * ZOUARI "Grand Prix" Theme
+   * 1. Primary: Power Red (Action)
+   * 2. Secondary: Midnight Navy (Structure)
+   * 3. Canvas: Warm Paper (Humanity)
+   * 4. Material: Titanium (The Bridge) -> NEW!
    */
   colors: {
+    // 1. POWER RED
     zouariPrimary: [
-      '#e8f1fb', // 0: Lightest (hover backgrounds, subtle highlights)
-      '#d1e3f7', // 1
-      '#a3c7ef', // 2
-      '#6696d5', // 3
-      '#4a82c8', // 4
-      '#3b71b8', // 5: Default Primary (Brand Color)
-      '#2d5a94', // 6: Hover state for primary buttons
-      '#244a7a', // 7
-      '#1a3a60', // 8
-      '#102a47', // 9: Darkest (text, deep backgrounds)
+      '#fff0f2', '#ffdee2', '#ffc2c9', '#ff9ba6', '#ff697a', 
+      '#f93a52', '#D90429', '#b90322', '#98061d', '#7f081b', 
     ],
-    // You can add a 'slate' or 'navy' palette here if you have specific grays
+    // 2. MIDNIGHT NAVY
+    zouariNavy: [
+      '#f8fafc', '#f1f5f9', '#e2e8f0', '#cbd5e1', '#94a3b8', 
+      '#64748b', '#475569', '#334155', '#1e293b', '#0f172a', 
+    ],
+    // 3. (Canvas is handled via global.css variables)
+
+    // 4. TITANIUM (The 4th Color)
+    // A cool, metallic scale to bridge Navy and Dark backgrounds
+    zouariTitanium: [
+      '#ffffff', 
+      '#f8fafc', 
+      '#f1f5f9', // 2: The "Badge" Color (Platinum)
+      '#e2e8f0', // 3: Borders
+      '#cbd5e1', 
+      '#94a3b8', 
+      '#64748b', 
+      '#475569', 
+      '#334155', 
+      '#1e293b',
+    ]
   },
 
   primaryColor: 'zouariPrimary',
-  primaryShade: 5, // Key index from the array above (default is 6, but your brand matches index 5 better)
+  primaryShade: 6,
 
-  /**
-   * Typography
-   * We use the system font stack as a fallback for performance.
-   */
   fontFamily:
     'Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif',
+  
   headings: {
-    fontFamily:
-      'Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif',
-    fontWeight: '700',
-    // We can scale heading sizes using rem
+    fontFamily: 'Inter, sans-serif',
+    fontWeight: '800', 
     sizes: {
-      h1: { fontSize: rem(36) },
-      h2: { fontSize: rem(30) },
-      h3: { fontSize: rem(24) },
-      h4: { fontSize: rem(20) },
+      h1: { fontSize: rem(44), lineHeight: '1.1' },
+      h2: { fontSize: rem(36), lineHeight: '1.2' },
+      h3: { fontSize: rem(28), lineHeight: '1.3' },
     },
   },
 
-  /**
-   * Spacing & Radius
-   * Using rem() ensures these values respect the user's browser font-size settings.
-   */
-  defaultRadius: 'md',
-  radius: {
-    xs: rem(4),
-    sm: rem(6),
-    md: rem(8),
-    lg: rem(12),
-    xl: rem(16),
-  },
+  defaultRadius: 'xs', 
 
-  /**
-   * Shadows
-   * Ported from your global.css to use Mantine's shadow system.
-   * Usage: <Paper shadow="md" />
-   */
-  shadows: {
-    xs: '0 1px 2px rgba(16, 23, 38, 0.04)',
-    sm: '0 1px 3px rgba(16, 23, 38, 0.06), 0 4px 12px rgba(16, 23, 38, 0.04)',
-    md: '0 4px 12px rgba(16, 23, 38, 0.08)',
-    lg: '0 8px 24px rgba(16, 23, 38, 0.12)',
-    xl: '0 12px 32px rgba(16, 23, 38, 0.16)',
-  },
-
-  /**
-   * Component Defaults
-   * This "Refactor" step reduces boilerplate in your page files.
-   * Every component will now feel "ZOUARI branded" by default.
-   */
   components: {
-    Container: {
-      defaultProps: {
-        size: 'lg', // Sets default max-width to 1200px (approx)
-      },
-    },
     Button: {
-      defaultProps: {
-        size: 'md',
-        radius: 'md', // Matches your "solid and reliable" aesthetic
-      },
+      defaultProps: { size: 'md', radius: 'xs' },
       styles: {
-        root: {
-          fontWeight: 600, // Slightly bolder buttons are better for legibility
-        },
+        root: { fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }, 
       },
     },
-    TextInput: {
-      defaultProps: {
-        radius: 'md',
-        size: 'md',
-      },
-      styles: (theme: MantineTheme) => ({
-        input: {
-          // You can access theme variables here if needed
-          backgroundColor: theme.colors.gray[0],
-        },
-      }),
-    },
-    Paper: {
-      defaultProps: {
-        radius: 'md',
-        withBorder: true, // Adds a subtle border by default for better definition
-      },
-    },
+    Paper: { defaultProps: { radius: 'xs', withBorder: true } },
+    Card: { defaultProps: { radius: 'xs', withBorder: true } },
   },
 });
