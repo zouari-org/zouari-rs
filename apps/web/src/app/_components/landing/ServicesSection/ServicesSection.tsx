@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Container, SimpleGrid, Stack, Text, Title } from '@mantine/core';
+import { Box, Container, List, Paper, SimpleGrid, Stack, Text, ThemeIcon, Title } from '@mantine/core';
 import {
   IconChartDots3,
   IconCheck,
@@ -29,21 +29,47 @@ function FeatureCard({ icon, title, description, capabilities }: FeatureCardProp
   const Icon = iconMap[icon] || IconServer2;
 
   return (
-    <div className={classes.card}>
-      <div className={classes.cardIcon}>
+    <Paper 
+      radius="md" 
+      withBorder 
+      p="xl" 
+      className={classes.card}
+    >
+      <ThemeIcon
+        size="xl"
+        radius="md"
+        variant="light"
+        color="zouariPrimary"
+        mb="md"
+      >
         <Icon size={24} stroke={1.5} />
-      </div>
-      <h3 className={classes.cardTitle}>{title}</h3>
-      <p className={classes.cardDescription}>{description}</p>
-      <ul className={classes.capabilityList}>
+      </ThemeIcon>
+      
+      <Text fw={700} fz="xl" className={classes.cardTitle}>
+        {title}
+      </Text>
+      
+      <Text c="dimmed" mt="sm" mb="lg" className={classes.cardDescription}>
+        {description}
+      </Text>
+
+      <List
+        spacing="xs"
+        size="sm"
+        center
+        icon={
+          <ThemeIcon color="teal" size={20} radius="xl" variant="light">
+            <IconCheck size={12} stroke={2.5} />
+          </ThemeIcon>
+        }
+      >
         {capabilities.map((cap) => (
-          <li key={cap} className={classes.capabilityItem}>
-            <IconCheck size={14} className={classes.checkIcon} />
+          <List.Item key={cap} className={classes.capabilityItem}>
             {cap}
-          </li>
+          </List.Item>
         ))}
-      </ul>
-    </div>
+      </List>
+    </Paper>
   );
 }
 
@@ -51,14 +77,14 @@ export function ServicesSection() {
   const { services } = landingContent;
 
   return (
-    <Box component="section" className={classes.root}>
-      <Container size="lg" py={100}>
+    <Box component="section" className={classes.root} id="services">
+      <Container size="lg" py={{ base: 60, md: 100 }}>
         <Stack gap="xl">
           <Box className={classes.header}>
             <Title order={2} className={classes.title}>
               {services.title}
             </Title>
-            <Text className={classes.subtitle}>{services.subtitle}</Text>
+            <Text c="dimmed" mt="md" className={classes.subtitle}>{services.subtitle}</Text>
           </Box>
 
           <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl" verticalSpacing="xl">
