@@ -1,69 +1,67 @@
 :root {
-  /* Light Mode */
-  --zouari-bg: #ffffff;
-  --zouari-surface: #f6f8fb;
-  --zouari-surface-elevated: #ffffff;
-  --zouari-border: #d0d6e1;
-  --zouari-border-subtle: #e8ecf2;
-  --zouari-text-primary: #101726;
-  --zouari-text-secondary: #4a5367;
-  --zouari-text-tertiary: #6b7280;
-  --zouari-primary: #3b71b8;
-  --zouari-primary-hover: #2d5a94;
-  --zouari-primary-light: rgba(59, 113, 184, 0.08);
-  --zouari-navy: #101726;
-  --zouari-slate: #2a3243;
-  --zouari-teal: #1fa7a4;
-  --zouari-teal-light: rgba(31, 167, 164, 0.1);
-  --zouari-alert-red: #d64545;
-  --zouari-success: #10b981;
+  /* --- LIGHT MODE --- */
+  /* Background: Warm Art Paper */
+  --zouari-bg: #FDFBF7; 
+  --zouari-surface: #ffffff;
+  
+  /* Header Configuration (Light Mode) */
+  --header-bg: rgba(255, 255, 255, 0.95);
+  --header-text: #111827; /* Deep Navy */
+  
+  /* Text: Deep Navy */
+  --zouari-text-primary: #111827; 
+  --zouari-text-secondary: #4b5563; 
+  
+  /* Border: Technical Grey */
+  --zouari-border: #1e293b;
+  --zouari-border-subtle: #e5e7eb;
 
-  /* Shadows - Light */
-  --zouari-shadow-sm: 0 1px 2px rgba(16, 23, 38, 0.04);
-  --zouari-shadow-md: 0 4px 12px rgba(16, 23, 38, 0.08);
-  --zouari-shadow-lg: 0 8px 24px rgba(16, 23, 38, 0.12);
-  --zouari-shadow-card: 0 1px 3px rgba(16, 23, 38, 0.06), 0 4px 12px rgba(16, 23, 38, 0.04);
-  --zouari-shadow-card-hover: 0 4px 16px rgba(16, 23, 38, 0.1), 0 8px 32px rgba(16, 23, 38, 0.08);
+  /* Brand Colors */
+  --zouari-primary: #D90429; /* Power Red */
+  --zouari-primary-hover: #b90322;
+  --zouari-navy: #111827;
+
+  /* Used for headers and logo backings to ensure contrast */
+  --zouari-titanium: #f1f5f9;
 }
 
 [data-mantine-color-scheme='dark'] {
-  /* Dark Mode */
-  --zouari-bg: #0a0e15;
-  --zouari-surface: #101726;
-  --zouari-surface-elevated: #1a2332;
-  --zouari-border: #2a3243;
-  --zouari-border-subtle: #1e2738;
-  --zouari-text-primary: #f4f7fb;
-  --zouari-text-secondary: #c5ccda;
-  --zouari-text-tertiary: #9ba5b6;
-  --zouari-primary: #6696d5;
-  --zouari-primary-hover: #7ba8e0;
-  --zouari-primary-light: rgba(102, 150, 213, 0.12);
-  --zouari-navy: #aab7ce;
-  --zouari-slate: #9ba5b6;
-  --zouari-teal: #45c8c4;
-  --zouari-teal-light: rgba(69, 200, 196, 0.12);
-  --zouari-alert-red: #f07070;
-  --zouari-success: #34d399;
-  --logo-bg: #e9edf7; /* transparent navy circle */
+  /* --- DARK MODE (The "Cockpit") --- */
+  /* Background: Deep Carbon / Slate */
+  --zouari-bg: #0f172a; 
+  --zouari-surface: #1e293b; 
+  
+  /* Header Configuration (Dark Mode) */
+  /* We keep the header LIGHT (Titanium) so the Navy Logo is visible */
+  --header-bg: rgba(241, 245, 249, 0.95); /* #f1f5f9 (Zinc 100) */
+  /* We force the text to remain NAVY on this light header */
+  --header-text: #111827; 
+  
+  /* Text in Body: White (Standard Dark Mode) */
+  --zouari-text-primary: #f8fafc;
+  --zouari-text-secondary: #cbd5e1;
 
-  /* Shadows - Dark */
-  --zouari-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
-  --zouari-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
-  --zouari-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
-  --zouari-shadow-card: 0 1px 3px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15);
-  --zouari-shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.3), 0 8px 32px rgba(0, 0, 0, 0.25);
+  /* Borders: Subtle Steel */
+  --zouari-border: #334155;
+  --zouari-border-subtle: #1e293b;
+
+  /* Brand Colors */
+  --zouari-primary: #ff697a; /* Lighter Red for dark bg contrast */
+  --zouari-primary-hover: #f93a52;
+  
+  /* In dark mode body, Navy becomes light grey */
+  --zouari-navy: #e2e8f0;
+
+  /* Titanium stays bright even in dark mode */
+  --zouari-titanium: #f1f5f9;
 }
 
-/* Base styles */
 body {
   background-color: var(--zouari-bg);
   color: var(--zouari-text-primary);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Reset link styling for buttons */
 a.zouari-btn {
   text-decoration: none;
 }

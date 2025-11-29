@@ -1,26 +1,36 @@
 .header {
-  /* Restore the branded glassmorphism effect */
-  background: light-dark(rgba(255, 255, 255, 0.85), rgba(102, 150, 213, 0.85));
+  /* This variable is always light/silver in both modes */
+  background: var(--header-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   
-  /* Ensure the border matches the theme */
-  border-bottom: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  /* The "Red Line" Tachometer Border */
+  border-bottom: 3px solid var(--zouari-primary);
+  
+  /* Optional: A subtle shadow to separate the "Titanium Bar" from the body */
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
 }
 
 .link {
   display: flex;
   align-items: center;
-  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-white));
+  
+  /* CONSUME THE VARIABLE: This is always #111827 (Navy) because we set it that way in global.css */
+  color: var(--header-text);
+  
   font-size: var(--mantine-font-size-sm);
-  font-weight: 500;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   text-decoration: none;
-  padding: 8px 12px;
-  border-radius: var(--mantine-radius-md);
-  transition: color 150ms ease, background-color 150ms ease;
+  padding: 8px 16px;
+  border-radius: 0;
+  transition: all 200ms ease;
 }
 
 .link:hover {
-  background-color: light-dark(var(--mantine-color-gray-0), rgba(255, 255, 255, 0.1));
-  color: var(--mantine-color-text);
+  /* Hover: Power Red Background, White Text */
+  background-color: var(--zouari-primary);
+  color: white; /* We want white text on the Red background */
+  transform: skewX(-10deg); /* Racing skew */
 }
