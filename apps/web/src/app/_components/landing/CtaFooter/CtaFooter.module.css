@@ -1,7 +1,7 @@
 .root {
   background: light-dark(
-    linear-gradient(135deg, #101726 0%, #2A3243 100%),
-    linear-gradient(135deg, var(--zouari-surface) 0%, #1A2332 100%)
+    linear-gradient(135deg, #101726 0%, #2a3243 100%),
+    linear-gradient(135deg, var(--zouari-surface) 0%, #1a2332 100%)
   );
   position: relative;
   overflow: hidden;
@@ -26,7 +26,7 @@
 }
 
 .title {
-  color: light-dark(#FFFFFF, var(--zouari-text-primary));
+  color: light-dark(#ffffff, var(--zouari-text-primary));
   font-size: rem(32px);
   font-weight: 700;
   letter-spacing: -0.02em;

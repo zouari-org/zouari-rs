@@ -9,11 +9,14 @@ export type CtaFooterContent = {
   };
 };
 
+// 1. Centralize the email address
+const CONTACT_EMAIL = 'consulting@zouari.org';
+
 const ctaFooter: CtaFooterContent = {
   title: 'Ready to Move Your Project Forward?',
   body: 'Whether you’re improving an existing system or starting something new, we begin with a simple, no-pressure conversation to understand your goals and challenges.',
   ctaLabel: 'Start the Conversation',
-  ctaHref: 'mailto:consulting@zouari.org',
+  ctaHref: `mailto:${CONTACT_EMAIL}`,
 
   // optional – you can comment this out if you don’t want a secondary CTA yet
   // secondaryCta: {
@@ -23,13 +26,19 @@ const ctaFooter: CtaFooterContent = {
 };
 
 export const landingContent = {
+  contact: {
+    email: CONTACT_EMAIL,
+    label: 'Contact',
+    ctaLabel: 'Contact Us',
+  },
+
   hero: {
     title: 'ZOUARI',
     subtitle: 'Secure by Design. Simple by Choice.',
     description:
       'We build and operate secure digital infrastructure for modern businesses. We apply defense-in-depth principles across backends, pipelines, and cloud systems — giving you the confidence to move fast without compromising security.',
     ctaLabel: 'Schedule a Consultation',
-    ctaHref: 'mailto:consulting@zouari.org',
+    ctaHref: `mailto:${CONTACT_EMAIL}`,
     stats: [
       { value: '99.9%', label: 'Service Reliability' },
       { value: '24h', label: 'Average Response Time' },
@@ -58,18 +67,15 @@ We don’t just ship code — we engineer resilient systems that withstand adver
   },
   services: {
     title: 'Enterprise-Grade Capabilities',
-    subtitle: 'Security, reliability, and engineering discipline—built for organizations that cannot afford gaps, regressions, or operational surprises.',
+    subtitle:
+      'Security, reliability, and engineering discipline—built for organizations that cannot afford gaps, regressions, or operational surprises.',
     features: [
       {
         icon: 'server',
         title: 'Secure Infrastructure & DevSecOps',
         description:
           'We design and operate secure, containerized infrastructure with automated CI/CD pipelines across major cloud platforms.',
-        capabilities: [
-          'Zero-trust design',
-          'Automated compliance',
-          'End-to-end auditability'
-        ],
+        capabilities: ['Zero-trust design', 'Automated compliance', 'End-to-end auditability'],
       },
       {
         icon: 'shield',
@@ -79,7 +85,7 @@ We don’t just ship code — we engineer resilient systems that withstand adver
         capabilities: [
           'Memory-safe by default',
           'Contract-driven API testing',
-          'Strict dependency hygiene'
+          'Strict dependency hygiene',
         ],
       },
       {
@@ -87,10 +93,10 @@ We don’t just ship code — we engineer resilient systems that withstand adver
         title: 'Secure Web Platforms',
         description:
           'Next.js applications with predictable data flows, strong UX, and integrated performance and security controls.',
-         capabilities: [
+        capabilities: [
           'A+ security headers',
           'Accessibility compliant',
-          'Performance budgets enforced'
+          'Performance budgets enforced',
         ],
       },
       {
@@ -98,11 +104,7 @@ We don’t just ship code — we engineer resilient systems that withstand adver
         title: 'Consulting & Advisory',
         description:
           'Architecture reviews, migration planning, system hardening, and hands-on guidance for modernizing legacy stacks.',
-          capabilities: [
-          'Threat modeling',
-          'Compliance gap analysis',
-          'Incident response planning'
-        ],
+          capabilities: ['Threat modeling', 'Compliance gap analysis', 'Incident response planning'],
       },
     ],
   },
@@ -140,15 +142,18 @@ We don’t just ship code — we engineer resilient systems that withstand adver
     points: [
       {
         title: 'Quality Without Chaos',
-        description: 'We move quickly without cutting corners. You get stable, reliable work—not rushed shortcuts that create problems later.',
+        description:
+          'We move quickly without cutting corners. You get stable, reliable work—not rushed shortcuts that create problems later.',
       },
       {
         title: 'Clear and Honest Communication',
-        description: 'You always know what’s happening, what we recommend, and why. No jargon, no hidden decisions, no surprises.',
+        description:
+          'You always know what’s happening, what we recommend, and why. No jargon, no hidden decisions, no surprises.',
       },
       {
         title: 'Built to Last',
-        description: 'We create systems your team can understand, maintain, and evolve—documented, organized, and future-friendly.',
+        description:
+          'We create systems your team can understand, maintain, and evolve—documented, organized, and future-friendly.',
       },
     ],
   },

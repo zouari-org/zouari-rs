@@ -1,22 +1,22 @@
 :root {
   /* Light Mode */
-  --zouari-bg: #FFFFFF;
-  --zouari-surface: #F6F8FB;
-  --zouari-surface-elevated: #FFFFFF;
-  --zouari-border: #D0D6E1;
-  --zouari-border-subtle: #E8ECF2;
+  --zouari-bg: #ffffff;
+  --zouari-surface: #f6f8fb;
+  --zouari-surface-elevated: #ffffff;
+  --zouari-border: #d0d6e1;
+  --zouari-border-subtle: #e8ecf2;
   --zouari-text-primary: #101726;
-  --zouari-text-secondary: #4A5367;
-  --zouari-text-tertiary: #6B7280;
-  --zouari-primary: #3B71B8;
-  --zouari-primary-hover: #2D5A94;
+  --zouari-text-secondary: #4a5367;
+  --zouari-text-tertiary: #6b7280;
+  --zouari-primary: #3b71b8;
+  --zouari-primary-hover: #2d5a94;
   --zouari-primary-light: rgba(59, 113, 184, 0.08);
   --zouari-navy: #101726;
-  --zouari-slate: #2A3243;
-  --zouari-teal: #1FA7A4;
+  --zouari-slate: #2a3243;
+  --zouari-teal: #1fa7a4;
   --zouari-teal-light: rgba(31, 167, 164, 0.1);
-  --zouari-alert-red: #D64545;
-  --zouari-success: #10B981;
+  --zouari-alert-red: #d64545;
+  --zouari-success: #10b981;
 
   /* Shadows - Light */
   --zouari-shadow-sm: 0 1px 2px rgba(16, 23, 38, 0.04);
@@ -28,23 +28,23 @@
 
 [data-mantine-color-scheme='dark'] {
   /* Dark Mode */
-  --zouari-bg: #0A0E15;
+  --zouari-bg: #0a0e15;
   --zouari-surface: #101726;
-  --zouari-surface-elevated: #1A2332;
-  --zouari-border: #2A3243;
-  --zouari-border-subtle: #1E2738;
-  --zouari-text-primary: #F4F7FB;
-  --zouari-text-secondary: #C5CCDA;
-  --zouari-text-tertiary: #9BA5B6;
-  --zouari-primary: #6696D5;
-  --zouari-primary-hover: #7BA8E0;
+  --zouari-surface-elevated: #1a2332;
+  --zouari-border: #2a3243;
+  --zouari-border-subtle: #1e2738;
+  --zouari-text-primary: #f4f7fb;
+  --zouari-text-secondary: #c5ccda;
+  --zouari-text-tertiary: #9ba5b6;
+  --zouari-primary: #6696d5;
+  --zouari-primary-hover: #7ba8e0;
   --zouari-primary-light: rgba(102, 150, 213, 0.12);
-  --zouari-navy: #AAB7CE;
-  --zouari-slate: #9BA5B6;
-  --zouari-teal: #45C8C4;
+  --zouari-navy: #aab7ce;
+  --zouari-slate: #9ba5b6;
+  --zouari-teal: #45c8c4;
   --zouari-teal-light: rgba(69, 200, 196, 0.12);
-  --zouari-alert-red: #F07070;
-  --zouari-success: #34D399;
+  --zouari-alert-red: #f07070;
+  --zouari-success: #34d399;
   --logo-bg: #e9edf7; /* transparent navy circle */
 
   /* Shadows - Dark */

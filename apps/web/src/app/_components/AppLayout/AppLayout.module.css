@@ -1,0 +1,26 @@
+.header {
+  /* Restore the branded glassmorphism effect */
+  background: light-dark(rgba(255, 255, 255, 0.85), rgba(102, 150, 213, 0.85));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  
+  /* Ensure the border matches the theme */
+  border-bottom: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-white));
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 500;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: var(--mantine-radius-md);
+  transition: color 150ms ease, background-color 150ms ease;
+}
+
+.link:hover {
+  background-color: light-dark(var(--mantine-color-gray-0), rgba(255, 255, 255, 0.1));
+  color: var(--mantine-color-text);
+}
