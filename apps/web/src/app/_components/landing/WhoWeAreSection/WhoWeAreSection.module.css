@@ -3,10 +3,6 @@
   border-top: 1px solid var(--zouari-border);
 }
 
-.header {
-  margin-bottom: rem(48px);
-}
-
 .title {
   color: var(--zouari-text-primary);
   font-size: rem(36px);
@@ -21,13 +17,6 @@
   line-height: 1.7;
   white-space: pre-line;
   max-width: rem(640px);
-}
-
-.highlightsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: rem(32px);
-  margin-top: rem(48px);
 }
 
 .highlightItem {
@@ -47,11 +36,4 @@
   color: var(--zouari-text-secondary);
   font-size: rem(14px);
   line-height: 1.6;
-}
-
-@media (max-width: mantine-breakpoint-md) {
-  .highlightsGrid {
-    grid-template-columns: 1fr;
-    gap: rem(16px);
-  }
 }

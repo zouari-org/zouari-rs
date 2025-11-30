@@ -1,17 +1,17 @@
 .root {
   /* 1. HERO MATCH: Warm Paper Background + Technical Grid */
   background-color: var(--zouari-bg);
-  
+
   /* The exact Grid Pattern from Hero Section */
-  background-image: 
+  background-image:
     linear-gradient(var(--zouari-border-subtle) 1px, transparent 1px),
     linear-gradient(90deg, var(--zouari-border-subtle) 1px, transparent 1px);
   background-size: 40px 40px;
   background-position: center top;
-  
+
   border-top: 1px solid var(--zouari-border);
   border-bottom: 1px solid var(--zouari-border);
-  
+
   padding-top: rem(100px);
   padding-bottom: rem(100px);
 }
@@ -27,17 +27,11 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: -0.02em;
-  
+
   /* Optional: Add a solid background behind title if grid makes it hard to read */
   /* background: var(--zouari-bg); */
   /* display: inline-block; */
   /* padding: 0 rem(12px); */
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: rem(32px);
 }
 
 /* THE CARDS */
@@ -45,19 +39,19 @@
   display: flex;
   gap: rem(24px);
   padding: rem(32px);
-  
+
   /* ADAPTIVE SURFACE: White in Light, Slate in Dark. 
      This guarantees text is always visible. */
   background: var(--zouari-surface);
-  
+
   /* Technical Borders */
   border: 1px solid var(--zouari-border);
   /* The Inactive Power Line (Grey) */
   border-left: 4px solid var(--zouari-border-subtle);
-  
+
   /* Sharp Corners */
   border-radius: 0;
-  
+
   transition: all 200ms ease;
   position: relative;
 }
@@ -66,28 +60,10 @@
   /* HOVER ACTION: All borders turn Red */
   /* We use border-color so we don't reset the 4px width on the left */
   border-color: var(--zouari-primary);
-  
+
   /* Lift Effect */
   transform: translateY(-4px);
   box-shadow: var(--zouari-shadow-card-hover);
-}
-
-/* THE ICONS */
-.cardIcon {
-  width: rem(56px);
-  height: rem(56px);
-  
-  /* Solid Navy Box */
-  background: var(--zouari-navy);
-  color: white; /* Icon is always white inside the navy box */
-  
-  /* Sharp Corners */
-  border-radius: 0;
-  
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
 }
 
 .cardTitle {
@@ -103,11 +79,4 @@
   color: var(--zouari-text-secondary);
   font-size: rem(15px);
   line-height: 1.6;
-}
-
-@media (max-width: mantine-breakpoint-sm) {
-  .grid {
-    grid-template-columns: 1fr;
-    gap: rem(24px);
-  }
 }

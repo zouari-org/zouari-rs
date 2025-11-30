@@ -17,7 +17,6 @@ export function HeroSection() {
           maw={720} keeps the line length readable on large screens.
         */}
         <Stack gap="xl" maw={720} className={classes.content}>
-          
           <Box className={classes.logoWrapper}>
             <NextImage
               src={logo}
@@ -31,21 +30,11 @@ export function HeroSection() {
           {/* Use Title for the main headline (H1) for SEO.
             Responsive font-size: 32px on mobile, 48px on desktop.
           */}
-          <Title 
-            order={1} 
-            className={classes.subtitle}
-            fz={{ base: 32, md: 48 }}
-            lh={1.1}
-          >
+          <Title order={1} className={classes.title} fz={{ base: 32, md: 48 }} lh={1.1}>
             {hero.subtitle}
           </Title>
 
-          <Text 
-            className={classes.description} 
-            c="dimmed" 
-            size="xl" 
-            lh={1.6}
-          >
+          <Text className={classes.description} c="dimmed" size="xl" lh={1.6}>
             {hero.description}
           </Text>
 
@@ -66,34 +55,26 @@ export function HeroSection() {
             - sm: 3 columns (Tablet+)
             This prevents stats from wrapping awkwardly.
           */}
-          <SimpleGrid 
-            cols={{ base: 2, sm: 3 }} 
-            spacing="xl" 
-            mt="xl"
-            className={classes.statsGrid}
-          >
-            {hero.stats.map((stat) => (
-              <Stack key={stat.label} gap={4}>
-                <Text 
-                  fz={{ base: 36, md: 48 }} 
-                  fw={900} 
-                  c="zouariPrimary" 
-                  lh={1}
-                >
-                  {stat.value}
-                </Text>
-                <Text 
-                  fz="sm" 
-                  c="dimmed" 
-                  tt="uppercase" 
-                  fw={600} 
-                  style={{ letterSpacing: rem(1) }}
-                >
-                  {stat.label}
-                </Text>
-              </Stack>
-            ))}
-          </SimpleGrid>
+          <Box className={classes.statsWrapper}>
+            <SimpleGrid cols={{ base: 2, sm: 3 }} spacing="xl" mt="xl">
+              {hero.stats.map((stat) => (
+                <Stack key={stat.label} gap={4}>
+                  <Text fz={{ base: 36, md: 48 }} fw={900} c="zouariPrimary" lh={1}>
+                    {stat.value}
+                  </Text>
+                  <Text
+                    fz="sm"
+                    c="dimmed"
+                    tt="uppercase"
+                    fw={600}
+                    style={{ letterSpacing: rem(1) }}
+                  >
+                    {stat.label}
+                  </Text>
+                </Stack>
+              ))}
+            </SimpleGrid>
+          </Box>
         </Stack>
       </Container>
     </Box>

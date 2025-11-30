@@ -104,7 +104,7 @@ We don’t just ship code — we engineer resilient systems that withstand adver
         title: 'Consulting & Advisory',
         description:
           'Architecture reviews, migration planning, system hardening, and hands-on guidance for modernizing legacy stacks.',
-          capabilities: ['Threat modeling', 'Compliance gap analysis', 'Incident response planning'],
+        capabilities: ['Threat modeling', 'Compliance gap analysis', 'Incident response planning'],
       },
     ],
   },

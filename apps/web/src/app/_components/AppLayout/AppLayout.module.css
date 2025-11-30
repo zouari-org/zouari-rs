@@ -3,21 +3,21 @@
   background: var(--header-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  
+
   /* The "Red Line" Tachometer Border */
   border-bottom: 3px solid var(--zouari-primary);
-  
+
   /* Optional: A subtle shadow to separate the "Titanium Bar" from the body */
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .link {
   display: flex;
   align-items: center;
-  
+
   /* CONSUME THE VARIABLE: This is always #111827 (Navy) because we set it that way in global.css */
   color: var(--header-text);
-  
+
   font-size: var(--mantine-font-size-sm);
   font-weight: 700;
   text-transform: uppercase;

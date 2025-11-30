@@ -16,15 +16,15 @@
 /* The "Promise" Cards */
 .item {
   background: var(--zouari-surface); /* Clean White */
-  
+
   /* Technical Borders */
   border: 1px solid var(--zouari-border);
   /* The Signature Red Power Line on the left */
   border-left: 4px solid var(--zouari-primary);
-  
+
   /* Sharp Corners for the "Machine" look */
   border-radius: 0;
-  
+
   padding: rem(24px) rem(32px);
   transition: all 200ms ease;
 }
@@ -35,36 +35,4 @@
   /* Red shadow glow */
   box-shadow: 4px 4px 0 rgba(217, 4, 41, 0.1);
   border-color: var(--zouari-primary);
-}
-
-/* The Icon Box */
-.itemIcon {
-  width: rem(40px);
-  height: rem(40px);
-  
-  /* Navy Box (Structure) instead of Soft Circle */
-  background: var(--zouari-navy);
-  color: white;
-  
-  /* Sharp corners */
-  border-radius: 0;
-  
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.itemTitle {
-  color: var(--zouari-text-primary);
-  font-weight: 800; /* Extra bold */
-  font-size: rem(18px);
-  text-transform: uppercase;
-  margin-bottom: rem(4px);
-  letter-spacing: 0.02em;
-}
-
-.itemDescription {
-  color: var(--zouari-text-secondary);
-  font-size: rem(16px);
-  line-height: 1.6;
 }
