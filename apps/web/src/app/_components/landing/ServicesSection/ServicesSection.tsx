@@ -1,6 +1,16 @@
 'use client';
 
-import { Box, Container, List, Paper, SimpleGrid, Stack, Text, ThemeIcon, Title } from '@mantine/core';
+import {
+  Box,
+  Container,
+  List,
+  Paper,
+  SimpleGrid,
+  Stack,
+  Text,
+  ThemeIcon,
+  Title,
+} from '@mantine/core';
 import {
   IconChartDots3,
   IconCheck,
@@ -29,26 +39,15 @@ function FeatureCard({ icon, title, description, capabilities }: FeatureCardProp
   const Icon = iconMap[icon] || IconServer2;
 
   return (
-    <Paper 
-      radius="md" 
-      withBorder 
-      p="xl" 
-      className={classes.card}
-    >
-      <ThemeIcon
-        size="xl"
-        radius="md"
-        variant="light"
-        color="zouariPrimary"
-        mb="md"
-      >
+    <Paper radius="md" withBorder p="xl" className={classes.card}>
+      <ThemeIcon size="xl" radius="md" variant="light" color="zouariPrimary" mb="md">
         <Icon size={24} stroke={1.5} />
       </ThemeIcon>
-      
+
       <Text fw={700} fz="xl" className={classes.cardTitle}>
         {title}
       </Text>
-      
+
       <Text c="dimmed" mt="sm" mb="lg" className={classes.cardDescription}>
         {description}
       </Text>
@@ -84,7 +83,9 @@ export function ServicesSection() {
             <Title order={2} className={classes.title}>
               {services.title}
             </Title>
-            <Text c="dimmed" mt="md" className={classes.subtitle}>{services.subtitle}</Text>
+            <Text c="dimmed" mt="md" className={classes.subtitle}>
+              {services.subtitle}
+            </Text>
           </Box>
 
           <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl" verticalSpacing="xl">

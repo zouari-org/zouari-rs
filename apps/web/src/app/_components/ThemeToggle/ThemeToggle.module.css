@@ -5,7 +5,7 @@
   background: var(--zouari-surface-elevated);
   border: 1px solid var(--zouari-border);
   color: var(--zouari-border);
-  transition: 
+  transition:
     background-color 200ms ease,
     border-color 200ms ease,
     color 200ms ease,
@@ -35,11 +35,11 @@
 }
 
 /* Dark mode: show sun, hide moon */
-:global([data-mantine-color-scheme='dark']) .sunIcon {
+:global([data-mantine-color-scheme="dark"]) .sunIcon {
   display: block;
 }
 
-:global([data-mantine-color-scheme='dark']) .moonIcon {
+:global([data-mantine-color-scheme="dark"]) .moonIcon {
   display: none;
 }
 

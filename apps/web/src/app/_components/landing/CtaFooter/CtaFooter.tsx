@@ -15,17 +15,11 @@ export function CtaFooter() {
           looks good on all screen sizes. 
         */}
         <Stack gap="xl" align="center" maw={640} mx="auto" className={classes.content}>
-          
           <Box style={{ textAlign: 'center' }}>
             <Title order={2} className={classes.title}>
               {ctaFooter.title}
             </Title>
-            <Text 
-              c="dimmed" 
-              mt="md" 
-              size="lg" 
-              className={classes.body}
-            >
+            <Text c="dimmed" mt="md" size="lg" className={classes.body}>
               {ctaFooter.body}
             </Text>
           </Box>
@@ -58,7 +52,6 @@ export function CtaFooter() {
               </Button>
             )}
           </Group>
-          
         </Stack>
       </Container>
     </Box>

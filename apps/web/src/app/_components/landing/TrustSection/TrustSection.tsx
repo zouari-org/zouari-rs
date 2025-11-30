@@ -22,26 +22,21 @@ function TrustCard({ icon, title, description }: TrustCardProps) {
   const Icon = iconMap[icon] || IconLock;
 
   return (
-    <Paper 
-      p="xl" 
-      radius="md" 
-      withBorder 
-      className={classes.card}
-    >
+    <Paper p="xl" radius="md" withBorder className={classes.card}>
       {/* Flex layout to align Icon and Text side-by-side.
         We use a div here for simple layout control inside the Paper.
       */}
       <div style={{ display: 'flex', gap: 'var(--mantine-spacing-md)' }}>
-        <ThemeIcon 
-          size="xl" 
-          radius="md" 
-          variant="light" 
-          color="zouariPrimary" 
+        <ThemeIcon
+          size="xl"
+          radius="md"
+          variant="light"
+          color="zouariPrimary"
           style={{ flexShrink: 0 }} // Prevent icon from shrinking on small screens
         >
           <Icon size={22} stroke={1.5} />
         </ThemeIcon>
-        
+
         <div>
           <Text fw={700} fz="lg" mb="xs" lh={1.2} className={classes.cardTitle}>
             {title}
@@ -74,11 +69,7 @@ export function TrustSection() {
             - sm: 2 columns (Tablet/Desktop)
             This ensures cards never get squished or overflow.
           */}
-          <SimpleGrid 
-            cols={{ base: 1, sm: 2 }} 
-            spacing="lg" 
-            verticalSpacing="lg"
-          >
+          <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="lg" verticalSpacing="lg">
             {trust.items.map((item) => (
               <TrustCard
                 key={item.title}

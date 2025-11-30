@@ -36,9 +36,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className={inter.className}>
-          <Providers>
-            <AppLayout>{children}</AppLayout>
-          </Providers>
+        <Providers>
+          <AppLayout>{children}</AppLayout>
+        </Providers>
       </body>
     </html>
   );

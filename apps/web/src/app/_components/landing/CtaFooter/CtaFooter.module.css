@@ -8,7 +8,7 @@
 }
 
 .title {
-  color: white;
+  color: var(--zouari-primary);
   font-size: rem(48px);
   font-weight: 800;
   text-transform: uppercase;
@@ -16,14 +16,14 @@
 }
 
 .body {
-  color: #cbd5e1; /* Light grey text */
+  color: var(--zouari-text-primary); /* Light grey text */
   font-size: rem(20px);
   margin-bottom: rem(48px);
 }
 
 .ctaPrimary {
   background: var(--zouari-primary); /* Red Button */
-  color: white;
+  color: var(--zouari-text-primary);
   padding: rem(18px) rem(36px);
   font-weight: 700;
   text-transform: uppercase;
@@ -33,6 +33,6 @@
 }
 
 .ctaPrimary:hover {
-  background: white;
+  background: var(--zouari-surface);
   color: var(--zouari-primary);
 }

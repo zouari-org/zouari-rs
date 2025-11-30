@@ -20,21 +20,15 @@ export function PromiseSection() {
 
           <Stack gap="md" w="100%" maw={700}>
             {promise.points.map((point) => (
-              <Paper 
-                key={point.title} 
-                p="lg" 
-                radius="md" 
-                withBorder 
-                className={classes.item}
-              >
+              <Paper key={point.title} p="lg" radius="md" withBorder className={classes.item}>
                 {/* Group with nowrap ensures the checkmark stays 
                   aligned to the left of the text block 
                 */}
                 <Group align="flex-start" wrap="nowrap">
-                  <ThemeIcon 
-                    size="lg" 
-                    radius="xl" 
-                    variant="light" 
+                  <ThemeIcon
+                    size="lg"
+                    radius="xl"
+                    variant="light"
                     color="zouariPrimary"
                     style={{ flexShrink: 0 }} // Prevents icon squashing on small screens
                   >

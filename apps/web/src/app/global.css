@@ -1,59 +1,44 @@
 :root {
   /* --- LIGHT MODE --- */
   /* Background: Warm Art Paper */
-  --zouari-bg: #FDFBF7; 
+  --zouari-bg: #fdfbf7;
   --zouari-surface: #ffffff;
-  
   /* Header Configuration (Light Mode) */
   --header-bg: rgba(255, 255, 255, 0.95);
   --header-text: #111827; /* Deep Navy */
-  
   /* Text: Deep Navy */
-  --zouari-text-primary: #111827; 
-  --zouari-text-secondary: #4b5563; 
-  
+  --zouari-text-primary: #111827;
+  --zouari-text-secondary: #4b5563;
   /* Border: Technical Grey */
   --zouari-border: #1e293b;
   --zouari-border-subtle: #e5e7eb;
-
   /* Brand Colors */
-  --zouari-primary: #D90429; /* Power Red */
+  --zouari-primary: #d90429; /* Power Red */
   --zouari-primary-hover: #b90322;
   --zouari-navy: #111827;
-
-  /* Used for headers and logo backings to ensure contrast */
-  --zouari-titanium: #f1f5f9;
 }
 
-[data-mantine-color-scheme='dark'] {
+[data-mantine-color-scheme="dark"] {
   /* --- DARK MODE (The "Cockpit") --- */
   /* Background: Deep Carbon / Slate */
-  --zouari-bg: #0f172a; 
-  --zouari-surface: #1e293b; 
-  
+  --zouari-bg: #0f172a;
+  --zouari-surface: #1e293b;
   /* Header Configuration (Dark Mode) */
   /* We keep the header LIGHT (Titanium) so the Navy Logo is visible */
   --header-bg: rgba(241, 245, 249, 0.95); /* #f1f5f9 (Zinc 100) */
   /* We force the text to remain NAVY on this light header */
-  --header-text: #111827; 
-  
+  --header-text: #111827;
   /* Text in Body: White (Standard Dark Mode) */
   --zouari-text-primary: #f8fafc;
   --zouari-text-secondary: #cbd5e1;
-
   /* Borders: Subtle Steel */
   --zouari-border: #334155;
   --zouari-border-subtle: #1e293b;
-
   /* Brand Colors */
   --zouari-primary: #ff697a; /* Lighter Red for dark bg contrast */
   --zouari-primary-hover: #f93a52;
-  
   /* In dark mode body, Navy becomes light grey */
   --zouari-navy: #e2e8f0;
-
-  /* Titanium stays bright even in dark mode */
-  --zouari-titanium: #f1f5f9;
 }
 
 body {
@@ -64,4 +49,8 @@ body {
 
 a.zouari-btn {
   text-decoration: none;
+}
+
+html {
+  scroll-behavior: smooth;
 }

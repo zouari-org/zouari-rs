@@ -45,13 +45,7 @@ export function AppLayout({ children }: AppLayoutProps) {
           <Group h="100%" justify="space-between">
             {/* Logo */}
             <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
-              <NextImage
-                src={logo}
-                alt="ZOUARI"
-                height={28}
-                style={{ width: 'auto' }}
-                priority
-              />
+              <NextImage src={logo} alt="ZOUARI" height={28} style={{ width: 'auto' }} priority />
             </Link>
 
             {/* Desktop Navigation (Visible from 'sm' up) */}
@@ -77,32 +71,25 @@ export function AppLayout({ children }: AppLayoutProps) {
       </AppShell.Header>
 
       {/* Mobile Navigation Drawer */}
-      <AppShell.Navbar p="md">
+      <AppShell.Navbar className={classes.header} p="md">
         <Stack gap="md">
           {navLinks.map((link) => (
-            <a 
-              key={link.label} 
-              href={link.href} 
+            <a
+              key={link.label}
+              href={link.href}
               className={classes.link}
               onClick={close} // Close drawer when clicking a link
             >
               {link.label}
             </a>
           ))}
-          <Button 
-            component="a" 
-            href={`mailto:${contact.email}`} 
-            fullWidth 
-            onClick={close}
-          >
+          <Button component="a" href={`mailto:${contact.email}`} fullWidth onClick={close}>
             Contact Us
           </Button>
         </Stack>
       </AppShell.Navbar>
 
-      <AppShell.Main>
-        {children}
-      </AppShell.Main>
+      <AppShell.Main>{children}</AppShell.Main>
 
       <ScrollToTop />
     </AppShell>

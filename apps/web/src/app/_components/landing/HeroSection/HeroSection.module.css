@@ -1,12 +1,12 @@
 .root {
   background-color: var(--zouari-bg);
   /* The Technical Grid Pattern */
-  background-image: 
+  background-image:
     linear-gradient(var(--zouari-border-subtle) 1px, transparent 1px),
     linear-gradient(90deg, var(--zouari-border-subtle) 1px, transparent 1px);
   background-size: 40px 40px;
   background-position: center top;
-  
+
   position: relative;
   overflow: hidden;
   padding-bottom: rem(80px);
@@ -18,25 +18,10 @@
   z-index: 1;
 }
 
-.logoWrapper{
+.logoWrapper {
   border-left: 2px solid var(--zouari-primary);
-  background: white;
-  box-shadow: 4px 4px 0 rgba(217, 4, 41, 0.15);
-}
-
-.subtitle {
-  color: var(--zouari-primary);
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  font-size: rem(14px);
-  margin-bottom: rem(24px);
-  display: inline-block;
-  padding: rem(6px) rem(12px);
-  background: white;
-  border: 2px solid var(--zouari-primary);
-  /* "Stitched" onto the grid */
-  box-shadow: 4px 4px 0 rgba(217, 4, 41, 0.15);
+  background: var(--header-bg);
+  box-shadow: 4px 4px 0 var(--zouari-primary);
 }
 
 .description {
@@ -60,7 +45,9 @@
   border-radius: 0;
   text-decoration: none;
   font-size: rem(16px);
-  transition: transform 150ms ease, box-shadow 150ms ease;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
   box-shadow: 6px 6px 0px var(--zouari-navy);
 }
 
@@ -70,27 +57,18 @@
   box-shadow: 8px 8px 0px var(--zouari-navy);
 }
 
-.statsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: rem(48px);
-  margin-top: rem(64px);
+.statsWrapper {
+  margin-top: rem(48px);
   padding-top: rem(32px);
-  border-top: 2px solid var(--zouari-border);
-}
-
-.statValue {
-  color: var(--zouari-primary);
-  font-size: rem(48px);
-  font-weight: 800;
-  line-height: 1;
-  font-family: monospace, sans-serif;
+  border-top: 1px solid var(--zouari-border);
 }
 
 @media (max-width: 48em) {
-  .statsGrid {
-    grid-template-columns: 1fr;
-    gap: rem(32px);
-    text-align: center;
+  .content {
+    text-align: left;
+  }
+
+  .statsWrapper {
+    margin-top: rem(32px);
   }
 }
