@@ -1,0 +1,52 @@
+networks:
+  zouari-network:
+    driver: bridge
+
+services:
+  traefik:
+    image: traefik:v3.6
+    container_name: zouari-traefik
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml
+      - ./acme.json:/acme.json
+    networks:
+      - zouari-network
+
+  backend:
+    image: ghcr.io/xasterisc/zouari-backend:latest
+    container_name: zouari-backend
+    restart: always
+    networks:
+      - zouari-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`api.zouari.org`) || Host(`api.staging.zouari.org`)"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.routers.backend.tls.certresolver=myresolver"
+      - "traefik.http.routers.backend.middlewares=zouari-cors,zouari-secure"
+      # CORS Middleware (Allow Frontend Only)
+      - "traefik.http.middlewares.zouari-cors.headers.accesscontrolallowmethods=GET,POST,PUT,DELETE,OPTIONS"
+      - "traefik.http.middlewares.zouari-cors.headers.accesscontrolalloworiginlist=https://zouari.org,https://staging.zouari.org"
+      - "traefik.http.middlewares.zouari-cors.headers.accesscontrolallowheaders=Content-Type,Authorization"
+      - "traefik.http.middlewares.zouari-cors.headers.accesscontrolallowcredentials=true"
+      # Security Headers
+      - "traefik.http.middlewares.zouari-secure.headers.framedeny=true"
+      - "traefik.http.middlewares.zouari-secure.headers.browserxssfilter=true"
+
+  web:
+    image: ghcr.io/xasterisc/zouari-web:latest
+    container_name: zouari-web
+    restart: always
+    networks:
+      - zouari-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web.rule=Host(`zouari.org`) || Host(`staging.zouari.org`)"
+      - "traefik.http.routers.web.entrypoints=websecure"
+      - "traefik.http.routers.web.tls.certresolver=myresolver"
+      - "traefik.http.routers.web.middlewares=zouari-secure"
