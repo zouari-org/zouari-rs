@@ -8,7 +8,7 @@ services:
 
   backend:
   # MATCHES GITHUB ACTION OUTPUT: ghcr.io/<owner>/<repo>-backend
-    image: ghcr.io/zouari-org/zouari-backend:${TAG:-main}
+    image: ghcr.io/zouari-org/zouari-rs-backend:${TAG:-main}
     container_name: zouari-backend-${ENV_TYPE} # e.g. zouari-backend-staging
     restart: always
     environment:
@@ -38,7 +38,7 @@ services:
 
   web:
   # MATCHES GITHUB ACTION OUTPUT: ghcr.io/<owner>/<repo>-web
-    image: ghcr.io/zouari-org/zouari-web:${TAG:-main}
+    image: ghcr.io/zouari-org/zouari-rs-web:${TAG:-main}
     container_name: zouari-web-${ENV_TYPE}
     restart: always
     environment:

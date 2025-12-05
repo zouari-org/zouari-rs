@@ -1,12 +1,20 @@
 FROM rust:1.91-alpine3.21 as builder
 WORKDIR /usr/src/app
 RUN apk add --no-cache musl-dev pkgconfig openssl-dev libc-dev
+
+# Pre-step: copy manifest
 COPY Cargo.toml Cargo.lock ./
+
 # Create dummy main to cache dependencies
-RUN mkdir src && echo "fn main() {}" > src/main.rs && echo "fn main() {}" > src/bin/main.rs
+RUN mkdir -p src/bin && \
+    echo "fn main() {}" > src/main.rs && \
+    echo "fn main() {}" > src/bin/main.rs
+
+# Build once to cache dependencies
 RUN cargo build --release
+
+# Now copy the full source and rebuild the real app
 COPY . .
-# Touch main to force rebuild app code
 RUN touch src/bin/main.rs
 RUN cargo build --release
 

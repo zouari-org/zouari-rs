@@ -8,16 +8,16 @@ import { Client } from '@zouari-rs/api-client';
  */
 const getBaseUrl = (): string => {
   // --- CASE 1: Server-Side (SSR/SSG) ---
-  // We are running inside the Docker container. 
+  // We are running inside the Docker container.
   // The Infisical CLI Wrapper has injected the REAL secrets into process.env.
   if (typeof window === 'undefined') {
     const envUrl = process.env.NEXT_PUBLIC_API_URL;
-    
+
     // Safety: If it's the build-time placeholder, fallback to localhost to prevent crash
     if (envUrl === '/api-fallback') {
       return 'http://localhost:5150';
     }
-    
+
     return envUrl || 'http://localhost:5150';
   }
 
@@ -52,10 +52,12 @@ const getBaseUrl = (): string => {
 const baseUrl = getBaseUrl();
 
 // --- Validation (The "Fail-Fast" Logic) ---
-// We only log critical errors instead of throwing, because throwing at the 
+// We only log critical errors instead of throwing, because throwing at the
 // top level can crash the build process itself if variables aren't ready yet.
 if (!baseUrl || baseUrl === '/api-fallback') {
-  console.warn('⚠️ API Client Warning: Could not determine a valid API Base URL. Defaulting to localhost.');
+  console.warn(
+    '⚠️ API Client Warning: Could not determine a valid API Base URL. Defaulting to localhost.'
+  );
 }
 
 export const api = new Client({
