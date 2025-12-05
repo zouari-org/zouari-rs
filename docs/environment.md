@@ -10,8 +10,6 @@ To run any local command, developers must first authenticate to Infisical using 
 export INFISICAL_TOKEN=$(infisical login --method=universal-auth --client-id=<identity-client-id> --client-secret=<identity-client-secret> --silent --plain)
 ```
 
------
-
 ## 2. Validation Strategy
 
 We use a "fail-fast" strategy for all environments. If a required variable is missing, the application **will not start**.
@@ -19,8 +17,6 @@ We use a "fail-fast" strategy for all environments. If a required variable is mi
   * **Backend (Rust):** Validated implicitly by Loco on startup. Missing variables cause a panic.
   * **Frontend (Next.js):** Validated explicitly by Zod in `next.config.ts`. Missing variables cause the build/dev process to exit with an error.
   * **Shared Schemas:** Public frontend variables are defined in `packages/validation/src/env.ts`.
-
------
 
 ## 3. Application Secrets (Managed by Infisical)
 
@@ -59,8 +55,6 @@ These variables are injected into the `pnpm run dev` command for the frontend. T
 | `NEXT_PUBLIC_API_URL` | **Fallback** public URL for the backend API. The client primarily auto-detects the API domain (e.g., `api.zouari.org`) from the window hostname. This variable is used for Server-Side Rendering (SSR) or local dev. |
 | `AUTH_SECRET` | **(Server-Only)** Secret key for NextAuth.js/Auth.js. Validated locally in `next.config.ts`. |
 | `NEXTAUTH_URL` | **(Server-Only)** The canonical URL of the frontend (e.g., `https://zouari.org`). Required for production Auth. |
-
------
 
 ## 4. Production & Staging (Coolify Zero Trust)
 
