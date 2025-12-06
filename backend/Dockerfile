@@ -1,4 +1,4 @@
-FROM rust:1.91-alpine3.21 as builder
+FROM rust:1.91-alpine3.21 AS builder
 WORKDIR /usr/src/app
 RUN apk add --no-cache musl-dev pkgconfig openssl-dev libc-dev
 

@@ -15,7 +15,9 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN npm install -g pnpm
+
+# Restore workspace symlinks
+RUN npm install -g pnpm && pnpm install --frozen-lockfile --prefer-offline
 
 # Inject a generic fallback for build-time static generation. 
 # The actual URL is determined at runtime by the smart client.
