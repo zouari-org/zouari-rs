@@ -20,18 +20,22 @@ services:
       - zouari-network
     labels:
       - "traefik.enable=true"
-      # DYNAMIC DOMAIN RULE
+
+      # Explicitly tell Traefik to route traffic to port 5150 (internal container port)
+      - "traefik.http.services.backend.loadbalancer.server.port=5150"
+
+      # ROUTER: api.zouari.org → backend
       - "traefik.http.routers.backend.rule=Host(`${DOMAIN_BACKEND}`)"
       - "traefik.http.routers.backend.entrypoints=websecure"
       - "traefik.http.routers.backend.tls.certresolver=letsencrypt"
       - "traefik.http.routers.backend.middlewares=zouari-cors,zouari-secure"
-      
+
         # CORS Middleware (Parameterized)
       - "traefik.http.middlewares.zouari-cors.headers.accesscontrolallowmethods=GET,POST,PUT,DELETE,OPTIONS"
       - "traefik.http.middlewares.zouari-cors.headers.accesscontrolalloworiginlist=${CORS_ALLOWED_ORIGIN}"
       - "traefik.http.middlewares.zouari-cors.headers.accesscontrolallowheaders=Content-Type,Authorization"
       - "traefik.http.middlewares.zouari-cors.headers.accesscontrolallowcredentials=true"
-        
+
         # Security Headers
       - "traefik.http.middlewares.zouari-secure.headers.framedeny=true"
       - "traefik.http.middlewares.zouari-secure.headers.browserxssfilter=true"
@@ -50,6 +54,10 @@ services:
       - zouari-network
     labels:
         - "traefik.enable=true"
+
+        # Explicitly map internal port 3000 to the router
+        - "traefik.http.services.web.loadbalancer.server.port=3000"
+
         # DYNAMIC DOMAIN RULE
         - "traefik.http.routers.web.rule=Host(`${DOMAIN_FRONTEND}`)"
         - "traefik.http.routers.web.entrypoints=websecure"

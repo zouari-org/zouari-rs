@@ -38,4 +38,6 @@ COPY --from=builder /usr/src/app/target/release/backend-cli ./zouari-backend
 COPY --from=builder /usr/src/app/config ./config
 
 # No ENTRYPOINT. Coolify defines it via command override.
+ENV PORT=5150
+EXPOSE 5150
 CMD ["./zouari-backend", "start"]
