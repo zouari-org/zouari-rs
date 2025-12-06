@@ -19,10 +19,10 @@ entryPoints:
     address: ":443"
     http:
       tls:
-        certResolver: myresolver
+        certResolver: letsencrypt
 
 certificatesResolvers:
-  myresolver:
+  letsencrypt:
     acme:
       email: support@zouari.org
       storage: acme.json
