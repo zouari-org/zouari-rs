@@ -57,8 +57,9 @@ jobs:
           client-secret: ${{ secrets.INFISICAL_CLIENT_SECRET }}
           project-slug: "zouari-rs"
           env-slug: ${{ github.ref == 'refs/heads/main' && 'staging' || 'prod' }}
-          secret-paths: "/frontend"
+          secret-path: "/frontend"
           export-type: "env"
+          domain: ${{secrets.INFISICAL_DOMAIN}}
 
       # 4. Build & Push Backend (Uses meta-backend tags)
       - name: Build and push Backend
