@@ -22,6 +22,10 @@ RUN npm install -g pnpm
 ARG NEXT_PUBLIC_API_URL=/api-fallback
 ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
 
+# Inject a dummy secret to pass Zod validation during the build.
+# The real value will be provided at runtime by Infisical.
+ENV AUTH_SECRET="build-time-dummy-secret"
+
 RUN pnpm turbo run build --filter=web...
 
 # 3. Production image, copy all the files and run next
