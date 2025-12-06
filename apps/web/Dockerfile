@@ -25,11 +25,11 @@ ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
 # Inject a dummy secret to pass Zod validation during the build.
 # The real value will be provided at runtime by Infisical.
 # Declare the ARG (no default value, forcing the caller to provide it)
-ARG AUTH_SECRET
+ARG AUTH_SECRET_PLACEHOLDER
 
-RUN : "${AUTH_SECRET:?AUTH_SECRET build arg is required for build}" && \
+RUN : "${AUTH_SECRET_PLACEHOLDER:?AUTH_SECRET_PLACEHOLDER build arg is required for build}" && \
     # Export it solely for this command's scope so Turbo sees it
-    AUTH_SECRET=${AUTH_SECRET} pnpm turbo run build --filter=web...
+    AUTH_SECRET=${AUTH_SECRET_PLACEHOLDER} pnpm turbo run build --filter=web...
 
 # 3. Production image, copy all the files and run next
 FROM base AS runner
