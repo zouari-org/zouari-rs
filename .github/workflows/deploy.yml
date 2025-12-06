@@ -56,7 +56,7 @@ jobs:
           client-id: ${{ secrets.INFISICAL_CLIENT_ID }}
           client-secret: ${{ secrets.INFISICAL_CLIENT_SECRET }}
           project-slug: "zouari-rs"
-          env-slug: "prod"
+          env-slug: ${{ github.ref == 'refs/heads/main' && 'staging' || 'prod' }}
           secret-paths: "/frontend"
           export-type: "env"
 
@@ -80,7 +80,6 @@ jobs:
           tags: ${{ steps.meta-web.outputs.tags }}
           labels: ${{ steps.meta-web.outputs.labels }}
           build-args: |
-            NEXT_PUBLIC_API_URL=${{ env.NEXT_PUBLIC_API_URL }}
             AUTH_SECRET_PLACEHOLDER=${{ secrets.AUTH_SECRET_PLACEHOLDER }}
 
   # --- DEPLOYMENT JOBS ---
