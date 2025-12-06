@@ -55,9 +55,9 @@ jobs:
         with:
           client-id: ${{ secrets.INFISICAL_CLIENT_ID }}
           client-secret: ${{ secrets.INFISICAL_CLIENT_SECRET }}
-          project-slug: "zouari-rs"
+          project-slug: ${{ secrets.INFISICAL_PROJECT_SLUG }}
           env-slug: ${{ github.ref == 'refs/heads/main' && 'staging' || 'prod' }}
-          secret-path: "/frontend"
+          secret-path: ${{ secrets.INFISICAL_SECRET_PATH }}
           export-type: "env"
           domain: ${{secrets.INFISICAL_DOMAIN}}
 

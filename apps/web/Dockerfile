@@ -41,7 +41,7 @@ ARG INFISICAL_VERSION=0.43.35
 
 # Install Infisical (Pinned)
 RUN apk add --no-cache curl ca-certificates openssl && \
-    curl -fsSL "https://github.com/Infisical/infisical/releases/download/v${INFISICAL_VERSION}/infisical_${INFISICAL_VERSION}_linux_amd64.tar.gz" -o infisical.tar.gz && \
+    curl -fsSL "https://github.com/Infisical/cli/releases/download/v${INFISICAL_VERSION}/cli_${INFISICAL_VERSION}_linux_amd64.tar.gz" -o infisical.tar.gz && \
     tar -xzf infisical.tar.gz -C /usr/local/bin infisical && \
     rm infisical.tar.gz && \
     chmod +x /usr/local/bin/infisical
