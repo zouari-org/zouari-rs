@@ -21,7 +21,9 @@ RUN cargo build --release
 
 # Now copy the full source and rebuild the real app
 COPY . .
-RUN touch src/bin/main.rs
+
+# Touch the main binary AND the migration library to force both to rebuild
+RUN touch src/bin/main.rs migration/src/lib.rs
 RUN cargo build --release
 
 # --- RUNNER ---
