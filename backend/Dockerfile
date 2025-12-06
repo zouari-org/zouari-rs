@@ -5,10 +5,16 @@ RUN apk add --no-cache musl-dev pkgconfig openssl-dev libc-dev
 # Pre-step: copy manifest
 COPY Cargo.toml Cargo.lock ./
 
-# Create dummy main to cache dependencies
-RUN mkdir -p src/bin && \
-    echo "fn main() {}" > src/main.rs && \
-    echo "fn main() {}" > src/bin/main.rs
+# Create the directory first to ensure COPY works as expected
+RUN mkdir -p migration
+COPY migration/Cargo.toml migration/
+
+# Create dummy source files for BOTH the backend and the migration crate
+RUN mkdir -p src/bin migration/src && \
+    # Stub the backend binary
+    echo "fn main() {}" > src/bin/main.rs && \
+    # Stub the migration library (needed because it's a path dependency)
+    echo "pub fn migrate() {}" > migration/src/lib.rs
 
 # Build once to cache dependencies
 RUN cargo build --release
