@@ -23,7 +23,7 @@
 
 .ctaPrimary {
   background: var(--zouari-primary); /* Red Button */
-  color: var(--zouari-text-primary);
+  color: var(--zouari-surface);
   padding: rem(18px) rem(36px);
   font-weight: 700;
   text-transform: uppercase;

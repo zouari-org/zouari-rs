@@ -1,0 +1,65 @@
+networks:
+  zouari-network:
+    driver: bridge
+
+services:
+  # Note: We rely on Coolify's built-in Traefik. 
+  # We do NOT define a 'traefik' service here to avoid port conflicts (80/443).
+
+  backend:
+  # MATCHES GITHUB ACTION OUTPUT: ghcr.io/<owner>/<repo>-backend
+    image: ghcr.io/zouari-org/zouari-rs-backend:${TAG:-main}
+    container_name: zouari-backend-${ENV_TYPE} # e.g. zouari-backend-staging
+    restart: always
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+      - INFISICAL_CLIENT_ID=${INFISICAL_CLIENT_ID}
+      - INFISICAL_CLIENT_SECRET=${INFISICAL_CLIENT_SECRET}
+    networks:
+      - zouari-network
+    labels:
+      - "traefik.enable=true"
+
+      # Explicitly tell Traefik to route traffic to port 5150 (internal container port)
+      - "traefik.http.services.backend.loadbalancer.server.port=5150"
+
+      # ROUTER: api.zouari.org → backend
+      - "traefik.http.routers.backend.rule=Host(`${DOMAIN_BACKEND}`)"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.routers.backend.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.backend.middlewares=zouari-cors,zouari-secure"
+
+        # CORS Middleware (Parameterized)
+      - "traefik.http.middlewares.zouari-cors.headers.accesscontrolallowmethods=GET,POST,PUT,DELETE,OPTIONS"
+      - "traefik.http.middlewares.zouari-cors.headers.accesscontrolalloworiginlist=${CORS_ALLOWED_ORIGIN}"
+      - "traefik.http.middlewares.zouari-cors.headers.accesscontrolallowheaders=Content-Type,Authorization"
+      - "traefik.http.middlewares.zouari-cors.headers.accesscontrolallowcredentials=true"
+
+        # Security Headers
+      - "traefik.http.middlewares.zouari-secure.headers.framedeny=true"
+      - "traefik.http.middlewares.zouari-secure.headers.browserxssfilter=true"
+
+  web:
+  # MATCHES GITHUB ACTION OUTPUT: ghcr.io/<owner>/<repo>-web
+    image: ghcr.io/zouari-org/zouari-rs-web:${TAG:-main}
+    container_name: zouari-web-${ENV_TYPE}
+    restart: always
+    environment:
+      # Fallback for SSR
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL} 
+      - INFISICAL_CLIENT_ID=${INFISICAL_CLIENT_ID}
+      - INFISICAL_CLIENT_SECRET=${INFISICAL_CLIENT_SECRET}
+    networks:
+      - zouari-network
+    labels:
+        - "traefik.enable=true"
+
+        # Explicitly map internal port 3000 to the router
+        - "traefik.http.services.web.loadbalancer.server.port=3000"
+
+        # DYNAMIC DOMAIN RULE
+        - "traefik.http.routers.web.rule=Host(`${DOMAIN_FRONTEND}`)"
+        - "traefik.http.routers.web.entrypoints=websecure"
+        - "traefik.http.routers.web.tls.certresolver=letsencrypt"
+        - "traefik.http.routers.web.middlewares=zouari-secure"
