@@ -81,6 +81,7 @@ jobs:
           labels: ${{ steps.meta-web.outputs.labels }}
           build-args: |
             NEXT_PUBLIC_API_URL=${{ env.NEXT_PUBLIC_API_URL }}
+            AUTH_SECRET=2Jpjibpb0GYbM_KgAgAy3nD_9ZZC50s3Y04r9yTfWCLWINdCyOpmVf9QB6XwRUoN
 
   # --- DEPLOYMENT JOBS ---
 
