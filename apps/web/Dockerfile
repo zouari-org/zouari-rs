@@ -39,7 +39,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 # Single source of truth for Infisical version
-ARG INFISICAL_VERSION=0.43.35
+ARG INFISICAL_VERSION=0.43.38
 
 # Install Infisical (Pinned)
 RUN apk add --no-cache curl ca-certificates openssl && \

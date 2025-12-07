@@ -9,18 +9,18 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./env": {
       "import": "./dist/env.js",
-      "require": "./dist/env.js",
-      "types": "./dist/env.d.ts"
+      "types": "./dist/env.d.ts",
+      "default": "./dist/env.js"
     },
     "./api": {
       "import": "./dist/api-gen/zod.gen.js",
-      "require": "./dist/api-gen/zod.gen.js",
-      "types": "./dist/api-gen/zod.gen.d.ts"
+      "types": "./dist/api-gen/zod.gen.d.ts",
+      "default": "./dist/api-gen/zod.gen.js"
     }
   },
   "files": [
