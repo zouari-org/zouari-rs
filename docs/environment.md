@@ -54,11 +54,14 @@ These variables are injected into the `pnpm run dev` command for the frontend. T
 | :--- | :--- |
 | `NEXT_PUBLIC_API_URL` | **Fallback** public URL for the backend API. The client primarily auto-detects the API domain (e.g., `api.zouari.org`) from the window hostname. This variable is used for Server-Side Rendering (SSR) or local dev. |
 | `AUTH_SECRET` | **(Server-Only)** Secret key for NextAuth.js/Auth.js. Validated locally in `next.config.ts`. |
-| `NEXTAUTH_URL` | **(Server-Only)** The canonical URL of the frontend (e.g., `https://zouari.org`). Required for production Auth. |
+| `NEXTAUTH_URL` | **(Server-Only)** The canonical URL of the frontend (e.g., `https://zouari.org`). Required for production Auth. *Note: In Production/Staging, this is automatically derived from `DOMAIN_FRONTEND` in the Compose file.* |
 
 ## 4. Production & Staging (Coolify Zero Trust)
 
-We **do not** use `.env` files on the server. We use the **Infisical CLI Wrapper** pattern with **Machine Identities**.
+We **do not** use `.env` files on the server. We use a hybrid approach:
+
+1.  **Structural Variables:** Defined in Coolify Stack Settings (Routing, domains).
+2.  **Secrets:** Injected into RAM via **Infisical CLI Wrapper**.
 
 ### Step 1: Create Identities (Infisical Dashboard)
 
@@ -67,22 +70,27 @@ Create two Machine Identities in Infisical:
 1.  **`coolify-staging`**: Read access to `Staging` environment.
 2.  **`coolify-prod`**: Read access to `Production` environment.
 
-*Save the `Client ID` and `Client Secret` for each. You will need them in Coolify.*
+*Save the `Client ID` and `Client Secret` for each.*
 
-### Step 2: Configure Coolify Services
+### Step 2: Configure Coolify Stack Variables
 
-For **both** Backend and Frontend services in Coolify, add the following Environment Variables. This keeps the configuration portable.
+In Coolify, create a new **Docker Compose** resource and add the following **Environment Variables** in the stack settings.
 
-| Variable | Description |
-| :--- | :--- |
-| `INFISICAL_CLIENT_ID` | The Machine Identity Client ID (from Step 1). |
-| `INFISICAL_CLIENT_SECRET` | The Machine Identity Client Secret (from Step 1). |
-| `INFISICAL_PROJECT_ID` | The ID of the Infisical Project (found in Project Settings). |
-| `INFISICAL_DOMAIN` | The Infisical API URL (e.g., `https://app.infisical.com` or your self-hosted URL). |
+| Variable | Staging Example | Production Example | Description |
+| :--- | :--- | :--- | :--- |
+| `TAG` | `main` | `v1.2.3` | Docker image tag to deploy. |
+| `ENV_TYPE` | `staging` | `prod` | Used for container naming. |
+| `DOMAIN_FRONTEND` | `staging.zouari.org` | `zouari.org` | The public domain for the web app. |
+| `DOMAIN_BACKEND` | `api.staging.zouari.org` | `api.zouari.org` | The public domain for the API. |
+| `CORS_ALLOWED_ORIGIN`| `https://staging.zouari.org`| `https://zouari.org` | Allowed origin for CORS. |
+| `INFISICAL_CLIENT_ID`| *(Hidden)* | *(Hidden)* | Machine Identity Client ID. |
+| `INFISICAL_CLIENT_SECRET`| *(Hidden)* | *(Hidden)* | Machine Identity Client Secret. |
+| `INFISICAL_PROJECT_ID` | `...` | `...` | Your Infisical Project ID. |
+| `INFISICAL_DOMAIN` | `https://app.infisical.com` | `https://app.infisical.com` | Infisical instance URL. |
 
-### Step 3: Start Commands (Entrypoint Wrapper)
+### Step 3: Override Start Commands
 
-Override the Docker Start Command in Coolify settings. This "one-liner" authenticates dynamically and then starts the process with secrets injected into RAM.
+In Coolify, you must override the "Custom Docker Run Command" for **each service** to inject the secrets.
 
 **Backend Service:**
 
@@ -91,7 +99,7 @@ export INFISICAL_TOKEN=$(infisical login --method=universal-auth --client-id="$I
 infisical run --projectId="$INFISICAL_PROJECT_ID" --env=prod --path=/backend --domain="$INFISICAL_DOMAIN" -- ./zouari-backend start
 ```
 
-**Frontend Service:**
+**Web Service:**
 
 ```bash
 export INFISICAL_TOKEN=$(infisical login --method=universal-auth --client-id="$INFISICAL_CLIENT_ID" --client-secret="$INFISICAL_CLIENT_SECRET" --domain="$INFISICAL_DOMAIN" --silent --plain) && \

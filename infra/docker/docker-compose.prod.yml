@@ -12,8 +12,7 @@ services:
     container_name: zouari-backend-${ENV_TYPE} # e.g. zouari-backend-staging
     restart: always
     environment:
-      - DATABASE_URL=${DATABASE_URL}
-      - REDIS_URL=${REDIS_URL}
+      - DOMAIN_BACKEND=${DOMAIN_BACKEND}
       - INFISICAL_CLIENT_ID=${INFISICAL_CLIENT_ID}
       - INFISICAL_CLIENT_SECRET=${INFISICAL_CLIENT_SECRET}
     networks:
@@ -47,7 +46,7 @@ services:
     restart: always
     environment:
       # Fallback for SSR
-      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL} 
+      - DOMAIN_FRONTEND=${DOMAIN_FRONTEND} 
       - INFISICAL_CLIENT_ID=${INFISICAL_CLIENT_ID}
       - INFISICAL_CLIENT_SECRET=${INFISICAL_CLIENT_SECRET}
     networks:
