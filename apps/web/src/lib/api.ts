@@ -14,7 +14,7 @@ const getBaseUrl = (): string => {
     const envUrl = process.env.NEXT_PUBLIC_API_URL;
 
     // Safety: If it's the build-time placeholder, fallback to localhost to prevent crash
-    if (envUrl === '/api-fallback') {
+    if (envUrl === 'http://api-fallback.localhost' || envUrl === '/api-fallback') {
       return 'http://localhost:5150';
     }
 
@@ -40,12 +40,19 @@ const getBaseUrl = (): string => {
   if (hostname === 'localhost' || hostname === '127.0.0.1') {
     // Try the env var first (dev mode), otherwise default
     const envUrl = process.env.NEXT_PUBLIC_API_URL;
-    return envUrl && envUrl !== '/api-fallback' ? envUrl : 'http://localhost:5150';
+    // UPDATED: Check for the new placeholder
+    const isPlaceholder = envUrl === '/api-fallback' || envUrl === 'http://api-fallback.localhost';
+    return envUrl && !isPlaceholder ? envUrl : 'http://localhost:5150';
   }
 
   // Fallback for Preview Deployments (e.g., Vercel/Coolify generated URLs)
   // If we can't guess, we try to rely on the baked-in var, or default.
-  return process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5150';
+  const envUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (envUrl === 'http://api-fallback.localhost' || envUrl === '/api-fallback') {
+    return 'http://localhost:5150';
+  }
+
+  return envUrl || 'http://localhost:5150';
 };
 
 // --- Execution ---
@@ -54,7 +61,7 @@ const baseUrl = getBaseUrl();
 // --- Validation (The "Fail-Fast" Logic) ---
 // We only log critical errors instead of throwing, because throwing at the
 // top level can crash the build process itself if variables aren't ready yet.
-if (!baseUrl || baseUrl === '/api-fallback') {
+if (!baseUrl || baseUrl === 'http://api-fallback.localhost') {
   console.warn(
     '⚠️ API Client Warning: Could not determine a valid API Base URL. Defaulting to localhost.'
   );
