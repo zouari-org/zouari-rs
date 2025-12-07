@@ -21,7 +21,7 @@ RUN npm install -g pnpm && pnpm install --frozen-lockfile --prefer-offline
 
 # Inject a generic fallback for build-time static generation. 
 # The actual URL is determined at runtime by the smart client.
-ARG NEXT_PUBLIC_API_URL=/api-fallback
+ARG NEXT_PUBLIC_API_URL=http://api-fallback.localhost
 ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
 
 # Inject a dummy secret to pass Zod validation during the build.
