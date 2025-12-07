@@ -80,8 +80,8 @@ jobs:
           push: true
           tags: ${{ steps.meta-web.outputs.tags }}
           labels: ${{ steps.meta-web.outputs.labels }}
-          build-args: |
-            AUTH_SECRET_PLACEHOLDER=${{ secrets.AUTH_SECRET_PLACEHOLDER }}
+          secrets: |
+            auth_secret=${{ secrets.AUTH_SECRET_PLACEHOLDER }}
 
   # --- DEPLOYMENT JOBS ---
 
