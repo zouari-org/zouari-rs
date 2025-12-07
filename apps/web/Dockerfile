@@ -51,7 +51,8 @@ RUN apk add --no-cache curl ca-certificates openssl && \
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=builder /app/apps/web/public ./apps/web/public
+# Static Assets: If you eventually add a public/ folder (for things like robots.txt or favicon.ico), you will need to uncomment this line.
+# COPY --from=builder /app/apps/web/public ./apps/web/public
 
 # Automatically leverage output traces to reduce image size
 COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
