@@ -1,6 +1,6 @@
 {
   "name": "@zouari-rs/validation",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "private": true,
   "description": "Centralized Zod validation schemas for the ZOUARI platform",
   "type": "module",
@@ -9,18 +9,18 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./env": {
       "import": "./dist/env.js",
-      "require": "./dist/env.js",
-      "types": "./dist/env.d.ts"
+      "types": "./dist/env.d.ts",
+      "default": "./dist/env.js"
     },
     "./api": {
       "import": "./dist/api-gen/zod.gen.js",
-      "require": "./dist/api-gen/zod.gen.js",
-      "types": "./dist/api-gen/zod.gen.d.ts"
+      "types": "./dist/api-gen/zod.gen.d.ts",
+      "default": "./dist/api-gen/zod.gen.js"
     }
   },
   "files": [
@@ -47,15 +47,15 @@
   "author": "ZOUARI <support@zouari.org>",
   "license": "MIT",
   "dependencies": {
-    "zod": "^4.1.12",
+    "zod": "^4.1.13",
     "zod-validation-error": "^5.0.0"
   },
   "devDependencies": {
-    "@hey-api/openapi-ts": "^0.87.5",
+    "@hey-api/openapi-ts": "^0.88.0",
     "@types/node": "^24.10.1",
-    "@vitest/coverage-v8": "^4.0.10",
-    "@vitest/ui": "^4.0.10",
+    "@vitest/coverage-v8": "^4.0.15",
+    "@vitest/ui": "^4.0.15",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.10"
+    "vitest": "^4.0.15"
   }
 }
