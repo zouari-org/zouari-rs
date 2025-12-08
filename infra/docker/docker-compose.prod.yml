@@ -17,6 +17,20 @@ services:
       - INFISICAL_CLIENT_SECRET=${INFISICAL_CLIENT_SECRET}
     networks:
       - zouari-network
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5150/_health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+    command: >
+      sh -c "
+      export INFISICAL_TOKEN=$(infisical login --method=universal-auth --client-id="${INFISICAL_CLIENT_ID}" --client-secret="${INFISICAL_CLIENT_SECRET}" --domain "${INFISICAL_BASE_URL}" --silent --plain) &&
+      infisical run --projectId=${INFISICAL_PROJECT_ID} --env=prod --path=/backend --domain=${INFISICAL_BASE_URL} -- ./zouari-backend start
+      "
+
     labels:
       - "traefik.enable=true"
 
@@ -51,6 +65,20 @@ services:
       - INFISICAL_CLIENT_SECRET=${INFISICAL_CLIENT_SECRET}
     networks:
       - zouari-network
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+    command: >
+      sh -c "
+      export INFISICAL_TOKEN=$(infisical login --method=universal-auth --client-id="${INFISICAL_CLIENT_ID}" --client-secret="${INFISICAL_CLIENT_SECRET}" --domain "${INFISICAL_BASE_URL}" --silent --plain) &&
+      infisical run --projectId=${INFISICAL_PROJECT_ID} --env=prod --path=/frontend --domain=${INFISICAL_BASE_URL} -- node apps/web/server.js
+      "
+
     labels:
         - "traefik.enable=true"
 
