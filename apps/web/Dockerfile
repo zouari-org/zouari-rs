@@ -25,7 +25,9 @@ ARG NEXT_PUBLIC_API_URL=http://api-fallback.localhost
 ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
 
 RUN --mount=type=secret,id=auth_secret \
+    --mount=type=secret,id=next_telemetry_disabled \
     AUTH_SECRET=$(cat /run/secrets/auth_secret) \
+    NEXT_TELEMETRY_DISABLED=$(cat /run/secrets/next_telemetry_disabled) \
     pnpm turbo run build --filter=web...
 
 # 3. Production image, copy all the files and run next

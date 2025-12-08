@@ -82,6 +82,7 @@ jobs:
           labels: ${{ steps.meta-web.outputs.labels }}
           secrets: |
             auth_secret=${{ secrets.AUTH_SECRET_PLACEHOLDER }}
+            next_telemetry_disabled=${{ env.NEXT_TELEMETRY_DISABLED }}
 
   # --- DEPLOYMENT JOBS ---
 
