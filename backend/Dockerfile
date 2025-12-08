@@ -34,9 +34,14 @@ ARG INFISICAL_VERSION=0.43.38
 
 WORKDIR /app
 
-# Install Runtime Dependencies & Infisical (Pinned Version)
+# Install Runtime Dependencies & Infisical (Dynamic Arch)
 RUN apk add --no-cache curl ca-certificates openssl && \
-    curl -fsSL "https://github.com/Infisical/cli/releases/download/v${INFISICAL_VERSION}/cli_${INFISICAL_VERSION}_linux_amd64.tar.gz" -o infisical.tar.gz && \
+    ARCH=$(uname -m) && \
+    if [ "$ARCH" = "x86_64" ]; then CLI_ARCH="amd64"; \
+    elif [ "$ARCH" = "aarch64" ]; then CLI_ARCH="arm64"; \
+    else echo "Unsupported Arch: $ARCH" && exit 1; fi && \
+    echo "Downloading Infisical for $CLI_ARCH..." && \
+    curl -fsSL "https://github.com/Infisical/cli/releases/download/v${INFISICAL_VERSION}/cli_${INFISICAL_VERSION}_linux_${CLI_ARCH}.tar.gz" -o infisical.tar.gz && \
     tar -xzf infisical.tar.gz -C /usr/local/bin infisical && \
     rm infisical.tar.gz && \
     chmod +x /usr/local/bin/infisical
