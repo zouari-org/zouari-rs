@@ -1,0 +1,97 @@
+# Application logging configuration
+logger:
+  # Enable logging (essential for debugging production issues)
+  enable: true
+  # Disable pretty backtrace to save performance resources
+  pretty_backtrace: false
+  # Log level: 'info' reduces noise compared to 'debug', hiding sensitive internal state
+  level: info
+  # Format: 'json' is best for tools like Coolify, Datadog, and AWS to parse logs
+  format: json
+  # override_filter: trace
+
+# Web server configuration
+server:
+  # Port on which the server will listen.
+  port: 5150
+  # CRITICAL: Must be 0.0.0.0 to allow connections from the Traefik proxy inside Docker
+  binding: "0.0.0.0"
+  # The UI hostname that mailers/links will point to
+  host: {{ get_env(name="APP_URL", default="https://zouari.org") }}
+  middlewares:
+    # In production, we usually want the frontend to handle 404s or Nginx/Traefik
+    fallback:
+      enable: false
+    # Static assets are usually served by Nginx/Traefik/CDN in prod, but keeping this enabled 
+    # allows the backend to serve its own assets if needed.
+    static:
+      enable: true
+      must_exist: true
+      precompressed: false
+      folder:
+        uri: "/"
+        path: "frontend/dist"
+      fallback: "frontend/dist/index.html"
+
+# Worker Configuration
+workers:
+  # BackgroundQueue allows async processing (sending emails, etc.) without blocking requests
+  mode: BackgroundQueue
+
+# Queue Configuration (Redis)
+queue:
+  kind: Redis
+  # Connection string injected by Infisical
+  uri: {{ get_env(name="REDIS_URL") }}
+  # NEVER flush Redis on startup in production
+  dangerously_flush: false
+
+# Cache Configuration
+Cache:
+  enable: true
+  kind: Redis
+  uri: {{ get_env(name="CACHE_URL") }}
+
+# Mailer Configuration
+mailer:
+  smtp:
+    enable: true
+    host: {{ get_env(name="SMTP_HOST") }}
+    port: {{ get_env(name="SMTP_PORT", default="587") }}
+    secure: {{ get_env(name="SMTP_SECURE", default="true") }}
+    auth:
+      user: {{ get_env(name="SMTP_USER") }}
+      password: {{ get_env(name="SMTP_PASSWORD") }}
+
+# Initializers Configuration
+initializers:
+  openapi:
+    redoc:
+      url: /redoc
+      spec_json_url: /redoc/openapi.json
+    scalar:
+      url: /scalar
+      spec_json_url: /scalar/openapi.json
+    swagger:
+      url: /swagger
+      spec_json_url: /api-docs/openapi.json
+
+# Database Configuration
+database:
+  uri: {{ get_env(name="DATABASE_URL") }}
+  enable_logging: false
+  # CRITICAL: Increased timeout to 15000ms (15s) to handle container startup latency
+  connect_timeout: {{ get_env(name="DB_CONNECT_TIMEOUT", default="15000") }}
+  idle_timeout: {{ get_env(name="DB_IDLE_TIMEOUT", default="500") }}
+  min_connections: {{ get_env(name="DB_MIN_CONNECTIONS", default="1") }}
+  max_connections: {{ get_env(name="DB_MAX_CONNECTIONS", default="10") }}
+  # Auto-migrate ensures schema is up to date on deploy
+  auto_migrate: true
+  dangerously_truncate: false
+  dangerously_recreate: false
+
+# Authentication Configuration
+auth:
+  jwt:
+    secret: {{ get_env(name="JWT_SECRET") }}
+    expiration: 604800 # 7 days
