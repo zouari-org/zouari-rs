@@ -1,8 +1,10 @@
 // auth mailer
 #![allow(non_upper_case_globals)]
 
+use loco_rs::mailer::MailerOpts;
 use loco_rs::prelude::*;
 use serde_json::json;
+use std::env;
 
 use crate::models::users;
 
@@ -12,7 +14,17 @@ static magic_link: Dir<'_> = include_dir!("src/mailers/auth/magic_link");
 
 #[allow(clippy::module_name_repetitions)]
 pub struct AuthMailer {}
-impl Mailer for AuthMailer {}
+impl Mailer for AuthMailer {
+    fn opts() -> MailerOpts {
+        let from_address = env::var("SMTP_FROM_ADDRESS").unwrap_or_else(|_| "noreply@zouari.org".to_string());
+        let from_name = env::var("SMTP_FROM_NAME").unwrap_or_else(|_| "Zouari Support".to_string());
+        
+        MailerOpts {
+            from: format!("{} <{}>", from_name, from_address),
+            ..Default::default()
+        }
+    }
+}
 impl AuthMailer {
     /// Sending welcome email the the given user
     ///

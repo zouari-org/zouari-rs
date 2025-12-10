@@ -37,7 +37,7 @@ try {
  * @type {import('next').NextConfig}
  */
 const nextConfig: NextConfig = {
-  output: "standalone",
+  output: 'standalone',
   transpilePackages: ['@zouari-rs/api-client', '@zouari-rs/validation'],
   /* your next.js config options here */
 };
