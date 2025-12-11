@@ -1,6 +1,7 @@
 networks:
   zouari-network:
-    driver: bridge
+    external: true
+    name: zouari-network
 
 services:
   # Note: We rely on Coolify's built-in Traefik. 
@@ -12,9 +13,12 @@ services:
     container_name: zouari-backend-${ENV_TYPE} # e.g. zouari-backend-staging
     restart: always
     environment:
-      - DOMAIN_BACKEND=${DOMAIN_BACKEND}
-      - INFISICAL_CLIENT_ID=${INFISICAL_CLIENT_ID}
-      - INFISICAL_CLIENT_SECRET=${INFISICAL_CLIENT_SECRET}
+      - 'DOMAIN_BACKEND=${DOMAIN_BACKEND}'
+      - 'INFISICAL_CLIENT_ID=${INFISICAL_CLIENT_ID}'
+      - 'INFISICAL_CLIENT_SECRET=${INFISICAL_CLIENT_SECRET}'
+      - 'INFISICAL_SECRETS_PROJECT_ID=${INFISICAL_SECRETS_PROJECT_ID}'
+      - 'INFISICAL_BASE_URL=${INFISICAL_BASE_URL}'
+      - 'INFISICAL_TOKEN=${SERVICE_TOKEN_INFISICAL}'
     networks:
       - zouari-network
 
@@ -25,11 +29,7 @@ services:
       retries: 5
       start_period: 10s
 
-    command: >
-      sh -c "
-      export INFISICAL_TOKEN=$(infisical login --method=universal-auth --client-id="${INFISICAL_CLIENT_ID}" --client-secret="${INFISICAL_CLIENT_SECRET}" --domain "${INFISICAL_BASE_URL}" --silent --plain) &&
-      infisical run --projectId=${INFISICAL_PROJECT_ID} --env=prod --path=/backend --domain=${INFISICAL_BASE_URL} -- ./zouari-backend start
-      "
+    command: "sh -c \" export INFISICAL_TOKEN=$(infisical login --method=universal-auth --client-id=\"${INFISICAL_CLIENT_ID}\" --client-secret=\"${INFISICAL_CLIENT_SECRET}\" --domain \"${INFISICAL_BASE_URL}\" --silent --plain) && infisical run --projectId=${INFISICAL_SECRETS_PROJECT_ID} --env=prod --path=/backend --domain=${INFISICAL_BASE_URL} -- ./zouari-backend start \"\n"
 
     labels:
       - "traefik.enable=true"
@@ -60,9 +60,12 @@ services:
     restart: always
     environment:
       # Fallback for SSR
-      - DOMAIN_FRONTEND=${DOMAIN_FRONTEND} 
-      - INFISICAL_CLIENT_ID=${INFISICAL_CLIENT_ID}
-      - INFISICAL_CLIENT_SECRET=${INFISICAL_CLIENT_SECRET}
+      - 'DOMAIN_FRONTEND=${DOMAIN_FRONTEND}'
+      - 'INFISICAL_CLIENT_ID=${INFISICAL_CLIENT_ID}'
+      - 'INFISICAL_CLIENT_SECRET=${INFISICAL_CLIENT_SECRET}'
+      - 'INFISICAL_BASE_URL=${INFISICAL_BASE_URL}'
+      - 'INFISICAL_SECRETS_PROJECT_ID=${INFISICAL_SECRETS_PROJECT_ID}'
+      - 'INFISICAL_TOKEN=${SERVICE_TOKEN_INFISICAL}'
     networks:
       - zouari-network
 
@@ -73,12 +76,7 @@ services:
       retries: 5
       start_period: 30s
 
-    command: >
-      sh -c "
-      export INFISICAL_TOKEN=$(infisical login --method=universal-auth --client-id="${INFISICAL_CLIENT_ID}" --client-secret="${INFISICAL_CLIENT_SECRET}" --domain "${INFISICAL_BASE_URL}" --silent --plain) &&
-      cd apps/web &&
-      infisical run --projectId=${INFISICAL_PROJECT_ID} --env=prod --path=/frontend --domain=${INFISICAL_BASE_URL} -- node server.js
-      "
+    command: "sh -c \" export INFISICAL_TOKEN=$(infisical login --method=universal-auth --client-id=\"${INFISICAL_CLIENT_ID}\" --client-secret=\"${INFISICAL_CLIENT_SECRET}\" --domain \"${INFISICAL_BASE_URL}\" --silent --plain) && cd apps/web && infisical run --projectId=${INFISICAL_SECRETS_PROJECT_ID} --env=prod --path=/frontend --domain=${INFISICAL_BASE_URL} -- node server.js \"\n"
 
     labels:
         - "traefik.enable=true"
