@@ -30,7 +30,7 @@ RUN cargo build --release
 FROM alpine:3.21
 
 # Single source of truth for Infisical version
-ARG INFISICAL_VERSION=0.43.38
+ARG INFISICAL_VERSION=0.43.45
 
 WORKDIR /app
 

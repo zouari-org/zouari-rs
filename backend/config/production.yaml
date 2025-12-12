@@ -22,8 +22,6 @@ server:
     # In production, we usually want the frontend to handle 404s or Nginx/Traefik
     fallback:
       enable: false
-    # Static assets are usually served by Nginx/Traefik/CDN in prod, but keeping this enabled 
-    # allows the backend to serve its own assets if needed.
     static:
       enable: false
       must_exist: false
