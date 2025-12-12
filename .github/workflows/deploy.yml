@@ -36,6 +36,7 @@ jobs:
             type=ref,event=branch
             type=ref,event=tag
             type=sha,prefix=sha-
+            type=raw,value=production,enable=${{ startsWith(github.ref, 'refs/tags/v') }}
 
       # 2b. Metadata for FRONTEND
       - name: Extract metadata (Frontend)
@@ -47,6 +48,7 @@ jobs:
             type=ref,event=branch
             type=ref,event=tag
             type=sha,prefix=sha-
+            type=raw,value=production,enable=${{ startsWith(github.ref, 'refs/tags/v') }}
 
       # 3. Fetch Public Build-Time Secrets
       # We rely on the Action to fetch secrets and export them as env vars
