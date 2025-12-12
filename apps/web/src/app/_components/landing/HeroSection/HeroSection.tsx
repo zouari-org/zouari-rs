@@ -22,7 +22,13 @@ export function HeroSection() {
               src={logo}
               alt="ZOUARI Logo"
               height={80}
-              style={{ width: 'auto', maxHeight: '100%' }}
+              style={{
+                width: '100%', // Forces image to shrink to container width
+                height: 'auto', // Maintains aspect ratio
+                maxWidth: '320px', // Caps width on large screens
+                maxHeight: '80px', // Caps height on large screens
+                display: 'block', // Removes inline spacing artifacts
+              }}
               priority
             />
           </Box>

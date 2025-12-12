@@ -36,7 +36,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 # Single source of truth for Infisical version
-ARG INFISICAL_VERSION=0.43.38
+ARG INFISICAL_VERSION=0.43.45
 
 # Install Infisical (Dynamic Arch)
 RUN apk add --no-cache curl ca-certificates openssl && \
