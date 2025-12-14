@@ -106,8 +106,8 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build frontend
-        run: pnpm run build
-        working-directory: ./apps/web
+        run: pnpm turbo run build --filter=web...
+        working-directory: .
         env:
           NEXT_PUBLIC_API_URL: http://localhost:5150
         
