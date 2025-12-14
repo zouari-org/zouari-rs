@@ -31,6 +31,7 @@ jobs:
           components: rustfmt
 
       - name: Run cargo fmt
+        working-directory: ./backend
         run: cargo fmt --all -- --check
 
   clippy:
@@ -51,6 +52,7 @@ jobs:
         uses: Swatinem/rust-cache@v2
         
       - name: Run cargo clippy
+        working-directory: ./backend
         # Deny warnings to ensure quality
         run: cargo clippy --all-features -- -D warnings -W clippy::pedantic -W clippy::nursery -W rust-2018-idioms
 
@@ -113,6 +115,7 @@ jobs:
         uses: Swatinem/rust-cache@v2
         
       - name: Run cargo test
+        working-directory: ./backend
         run: cargo test --all-features --all
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}
