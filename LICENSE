@@ -1,21 +1,57 @@
-MIT License
+Business Source License 1.1
 
-Copyright (c) 2025 Mohamed Zouari
+License text copyright (c) 2017 MariaDB Corporation Ab.
+“Business Source License” is a trademark of MariaDB Corporation Ab.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+-------------------------------------------------------------------------------
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Parameters
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+Licensor:              Mohamed Zouari
+
+Licensed Work:         ZOUARI Platform (including all source code, build scripts,
+                       configuration files, and documentation contained in this
+                       repository)
+
+Additional Use Grant:  You may copy, modify, and create derivative works of the
+                       Licensed Work for personal use, internal evaluation,
+                       research, and non-production development purposes.
+
+                       You may NOT use the Licensed Work, in whole or in part,
+                       to provide a production service, hosted service,
+                       commercial offering, or competing platform without
+                       explicit written permission from the Licensor.
+
+Change Date:           None
+
+Change License:        None
+
+-------------------------------------------------------------------------------
+
+Terms
+
+The Licensor hereby grants you the right to copy, modify, create derivative works,
+and redistribute the Licensed Work, subject to the limitations described below.
+
+You may not use the Licensed Work for production purposes, including but not
+limited to:
+
+- Operating or hosting the Licensed Work as a public or private service
+- Offering the Licensed Work as part of a commercial or revenue-generating system
+- Providing the Licensed Work as Software-as-a-Service (SaaS)
+- Using the Licensed Work to build or operate a competing product or platform
+
+These restrictions apply whether the Licensed Work is modified or unmodified.
+
+There is no automatic conversion of this license to an open-source license.
+
+-------------------------------------------------------------------------------
+
+Disclaimer of Warranty
+
+THE LICENSED WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+LICENSOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION
+WITH THE LICENSED WORK OR THE USE OR OTHER DEALINGS IN THE LICENSED WORK.
