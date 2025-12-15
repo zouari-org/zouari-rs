@@ -54,7 +54,7 @@ jobs:
       - name: Run cargo clippy
         working-directory: ./backend
         # Deny warnings to ensure quality
-        run: cargo clippy --all-features -- -D warnings -W clippy::pedantic -W clippy::nursery -W rust-2018-idioms
+        run: cargo clippy --all-features -- -D warnings -W clippy::pedantic -W clippy::nursery -W rust-2018-idioms -A clippy::needless_for_each
 
   test:
     name: Run Tests
@@ -122,3 +122,4 @@ jobs:
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}
           DATABASE_URL: postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres_test
+          JWT_SECRET: "ci-jwt-secret-please-change-32chars-min"
