@@ -204,9 +204,10 @@ async fn login(State(ctx): State<AppContext>, Json(params): Json<LoginParams>) -
 
     let jwt_secret = ctx.config.get_jwt_config()?;
 
-    let token = user
-        .generate_jwt(&jwt_secret.secret, jwt_secret.expiration)
-        .or_else(|_| unauthorized("unauthorized!"))?;
+    let token = user.generate_jwt(&jwt_secret.secret, jwt_secret.expiration).map_err(|e| {
+        tracing::error!("JWT generation error: {e:?}");
+        Error::InternalServerError
+    })?;
 
     format::json(LoginResponse::new(&user, &token))
 }
@@ -307,9 +308,10 @@ async fn magic_link_verify(
 
     let jwt_secret = ctx.config.get_jwt_config()?;
 
-    let token = user
-        .generate_jwt(&jwt_secret.secret, jwt_secret.expiration)
-        .or_else(|_| unauthorized("unauthorized!"))?;
+    let token = user.generate_jwt(&jwt_secret.secret, jwt_secret.expiration).map_err(|e| {
+        tracing::error!("JWT generation error: {e:?}");
+        Error::InternalServerError
+    })?;
 
     format::json(LoginResponse::new(&user, &token))
 }
@@ -359,5 +361,8 @@ pub fn routes() -> Routes {
         .add("/current", openapi(get(current), routes!(current)))
         .add("/magic-link", openapi(post(magic_link), routes!(magic_link)))
         .add("/magic-link/{token}", openapi(get(magic_link_verify), routes!(magic_link_verify)))
-        .add("/resend-verification-mail", openapi(post(resend_verification_email), routes!(resend_verification_email)))
+        .add(
+            "/resend-verification-mail",
+            openapi(post(resend_verification_email), routes!(resend_verification_email)),
+        )
 }

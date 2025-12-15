@@ -3,7 +3,7 @@
 # Application logging configuration
 logger:
   # Enable or disable logging.
-  enable: false
+  enable: true
   # Enable pretty backtrace (sets RUST_BACKTRACE=1)
   pretty_backtrace: true
   # Log level, options: trace, debug, info, warn or error.
@@ -100,6 +100,7 @@ auth:
   # JWT authentication
   jwt:
     # Secret key for token generation and verification
-    secret: {{ get_env(name="JWT_SECRET")}}
+    # This string decodes to "Base64SecretKeyForTestingPurposesOnly"
+    secret: {{ get_env(name="JWT_SECRET", default="QmFzZTY0U2VjcmV0S2V5Rm9yVGVzdGluZ1B1cnBvc2VzT25seQ==") }}
     # Token expiration time in seconds
     expiration: 604800 # 7 days

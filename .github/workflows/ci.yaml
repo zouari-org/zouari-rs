@@ -1,0 +1,126 @@
+name: CI (Public Verification)
+
+on:
+  push:
+    branches: ["main"] # Strict: Only run on merge to main
+  pull_request:
+    branches: ["main"] # Verify all PRs targeting main
+
+# ⚡ Best Practice: Cancel outdated builds on the same PR to save resources
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  RUST_TOOLCHAIN: stable
+  TOOLCHAIN_PROFILE: minimal
+
+jobs:
+  rustfmt:
+    name: Check Style
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v6
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: ${{ env.RUST_TOOLCHAIN }}
+          components: rustfmt
+
+      - name: Run cargo fmt
+        working-directory: ./backend
+        run: cargo fmt --all -- --check
+
+  clippy:
+    name: Run Clippy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v6
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: ${{ env.RUST_TOOLCHAIN }}
+          components: clippy
+          
+      - name: Setup Rust cache
+        uses: Swatinem/rust-cache@v2
+        
+      - name: Run cargo clippy
+        working-directory: ./backend
+        # Deny warnings to ensure quality
+        run: cargo clippy --all-features -- -D warnings -W clippy::pedantic -W clippy::nursery -W rust-2018-idioms -A clippy::needless_for_each
+
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    services:
+      redis:
+        image: redis
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - "6379:6379"
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DB: postgres_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - "5432:5432"
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v6
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: ${{ env.RUST_TOOLCHAIN }}
+
+      - name: Setup Node.js with Corepack
+        run: corepack enable
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: "pnpm"
+
+      - name: Install dependencies (Root)
+        run: pnpm install --frozen-lockfile
+
+      - name: Build frontend
+        run: pnpm turbo run build --filter=web...
+        working-directory: .
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost:5150
+          AUTH_SECRET: "ci-placeholder-secret-please-change-32chars-min"
+          TURBO_TELEMETRY_DISABLED: "1"
+        
+      - name: Setup Rust cache
+        uses: Swatinem/rust-cache@v2
+        
+      - name: Run cargo test
+        working-directory: ./backend
+        run: cargo test --all-features --all
+        env:
+          REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}
+          DATABASE_URL: postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres_test
+          RUST_LOG: debug
+          JWT_SECRET: "QmFzZTY0U2VjcmV0S2V5Rm9yVGVzdGluZ1B1cnBvc2VzT25seQ=="
