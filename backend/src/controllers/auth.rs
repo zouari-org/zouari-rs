@@ -205,8 +205,8 @@ async fn login(State(ctx): State<AppContext>, Json(params): Json<LoginParams>) -
     let jwt_secret = ctx.config.get_jwt_config()?;
 
     let token = user.generate_jwt(&jwt_secret.secret, jwt_secret.expiration).map_err(|e| {
-        tracing::error!("JWT generation error: {e}");
-        Error::BadRequest(e.to_string())
+        tracing::error!("JWT generation error: {e:?}");
+        Error::BadRequest(format!("JWT Error: {e:?}"))
     })?;
 
     format::json(LoginResponse::new(&user, &token))
@@ -309,8 +309,8 @@ async fn magic_link_verify(
     let jwt_secret = ctx.config.get_jwt_config()?;
 
     let token = user.generate_jwt(&jwt_secret.secret, jwt_secret.expiration).map_err(|e| {
-        tracing::error!("JWT generation error: {e}");
-        Error::BadRequest(e.to_string())
+        tracing::error!("JWT generation error: {e:?}");
+        Error::BadRequest(format!("JWT Error: {e:?}"))
     })?;
 
     format::json(LoginResponse::new(&user, &token))
