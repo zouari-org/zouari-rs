@@ -100,6 +100,6 @@ auth:
   # JWT authentication
   jwt:
     # Secret key for token generation and verification
-    secret: {{ get_env(name="JWT_SECRET", default="ci-jwt-secret-please-change-32chars-min") }}
+    secret: "ci-jwt-secret-please-change-32chars-min"
     # Token expiration time in seconds
     expiration: 604800 # 7 days
