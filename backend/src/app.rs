@@ -1,5 +1,5 @@
-use loco_openapi::prelude::*;
 use async_trait::async_trait;
+use loco_openapi::prelude::*;
 use loco_rs::{
     Result,
     app::{AppContext, Hooks, Initializer},
@@ -49,19 +49,20 @@ impl Hooks for App {
                 Box::new(
                     loco_openapi::OpenapiInitializerWithSetup::new(
                         |ctx| {
+                            #[allow(clippy::needless_for_each)]
                             #[derive(OpenApi)]
                             #[openapi(
                                 // This is what adds the "Authorize" button for JWT
                                 modifiers(&SecurityAddon),
                                 info(
                                     title = "ZOUARI Platform API",
-                                    description = r#"
+                                    description = r"
 The ZOUARI Platform API defines the official backend contract for all services within the ZOUARI ecosystem.  
 It is built on a Secure-by-Design architecture using Rust and follows strict Zero-Trust, validation, and consistency principles.
 
 This specification provides stable, well-typed, and predictable interfaces for all internal applications and automation systems.  
 It serves as the single source of truth for request/response models, authentication flow, and service behavior across the platform.
-"#,
+",
                                     version = "1.1.0",
                                     contact(
                                         name = "Support Team / ZOUARI",
@@ -69,7 +70,7 @@ It serves as the single source of truth for request/response models, authenticat
                                         url = "https://zouari.org"
                                     ),
                                     license(
-                                        name = "MIT"
+                                        name = "BSL"
                                     )
                                 )
                             )]

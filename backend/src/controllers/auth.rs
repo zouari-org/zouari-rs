@@ -359,5 +359,8 @@ pub fn routes() -> Routes {
         .add("/current", openapi(get(current), routes!(current)))
         .add("/magic-link", openapi(post(magic_link), routes!(magic_link)))
         .add("/magic-link/{token}", openapi(get(magic_link_verify), routes!(magic_link_verify)))
-        .add("/resend-verification-mail", openapi(post(resend_verification_email), routes!(resend_verification_email)))
+        .add(
+            "/resend-verification-mail",
+            openapi(post(resend_verification_email), routes!(resend_verification_email)),
+        )
 }

@@ -110,6 +110,8 @@ jobs:
         working-directory: .
         env:
           NEXT_PUBLIC_API_URL: http://localhost:5150
+          AUTH_SECRET: "ci-placeholder-secret-please-change-32chars-min"
+          TURBO_TELEMETRY_DISABLED: "1"
         
       - name: Setup Rust cache
         uses: Swatinem/rust-cache@v2

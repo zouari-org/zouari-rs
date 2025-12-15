@@ -1,10 +1,10 @@
 // auth mailer
 #![allow(non_upper_case_globals)]
 
-use loco_rs::mailer::MailerOpts;
-use loco_rs::prelude::*;
-use serde_json::json;
 use std::env;
+
+use loco_rs::{mailer::MailerOpts, prelude::*};
+use serde_json::json;
 
 use crate::models::users;
 
@@ -16,13 +16,11 @@ static magic_link: Dir<'_> = include_dir!("src/mailers/auth/magic_link");
 pub struct AuthMailer {}
 impl Mailer for AuthMailer {
     fn opts() -> MailerOpts {
-        let from_address = env::var("SMTP_FROM_ADDRESS").unwrap_or_else(|_| "noreply@zouari.org".to_string());
+        let from_address =
+            env::var("SMTP_FROM_ADDRESS").unwrap_or_else(|_| "noreply@zouari.org".to_string());
         let from_name = env::var("SMTP_FROM_NAME").unwrap_or_else(|_| "Zouari Support".to_string());
-        
-        MailerOpts {
-            from: format!("{} <{}>", from_name, from_address),
-            ..Default::default()
-        }
+
+        MailerOpts { from: format!("{from_name} <{from_address}>"), ..Default::default() }
     }
 }
 impl AuthMailer {
@@ -36,7 +34,7 @@ impl AuthMailer {
             ctx,
             &welcome,
             mailer::Args {
-                to: user.email.to_string(),
+                to: user.email.clone(),
                 locals: json!({
                   "name": user.name,
                   "verifyToken": user.email_verification_token,
@@ -60,7 +58,7 @@ impl AuthMailer {
             ctx,
             &forgot,
             mailer::Args {
-                to: user.email.to_string(),
+                to: user.email.clone(),
                 locals: json!({
                   "name": user.name,
                   "resetToken": user.reset_token,
@@ -84,7 +82,7 @@ impl AuthMailer {
             ctx,
             &magic_link,
             mailer::Args {
-                to: user.email.to_string(),
+                to: user.email.clone(),
                 locals: json!({
                   "name": user.name,
                   "token": user.magic_link_token.clone().ok_or_else(|| Error::string(
