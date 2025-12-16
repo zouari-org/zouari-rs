@@ -1,6 +1,6 @@
 {
   "name": "@zouari-rs/api-client",
-  "version": "3.2.1",
+  "version": "3.5.0",
   "description": "Auto-generated OpenAPI client for the ZOUARI API.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -15,6 +15,7 @@
   "author": "ZOUARI <support@zouari.org>",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^24.10.4",
     "openapi-typescript-codegen": "^0.29.0",
     "typescript": "^5.9.3"
   },

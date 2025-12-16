@@ -1,6 +1,6 @@
 {
   "name": "@zouari-rs/validation",
-  "version": "3.3.0",
+  "version": "3.6.0",
   "private": true,
   "description": "Centralized Zod validation schemas for the ZOUARI platform",
   "type": "module",
@@ -47,15 +47,15 @@
   "author": "ZOUARI <support@zouari.org>",
   "license": "MIT",
   "dependencies": {
-    "zod": "^4.1.13",
+    "zod": "^4.2.1",
     "zod-validation-error": "^5.0.0"
   },
   "devDependencies": {
-    "@hey-api/openapi-ts": "^0.88.0",
-    "@types/node": "^24.10.1",
-    "@vitest/coverage-v8": "^4.0.15",
-    "@vitest/ui": "^4.0.15",
+    "@hey-api/openapi-ts": "^0.88.2",
+    "@types/node": "24",
+    "@vitest/coverage-v8": "^4.0.16",
+    "@vitest/ui": "^4.0.16",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.15"
+    "vitest": "^4.0.16"
   }
 }
