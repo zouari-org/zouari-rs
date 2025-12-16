@@ -1,6 +1,7 @@
 # ZOUARI Platform (v3)
 
 [![License: BSL 1.1](https://img.shields.io/badge/License-BSL%201.1-red.svg)](LICENSE)
+[![CI](https://github.com/zouari-org/zouari-rs/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/zouari-org/zouari-rs/actions/workflows/ci.yaml)
 [![Code Style: Biome](https://img.shields.io/badge/code_style-biome-364132.svg)](https://github.com/biomejs/biome)
 ![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=flat&logo=rust&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next-black?style=flat&logo=next.js&logoColor=white)
