@@ -29,6 +29,10 @@ jobs:
       packages: write
       id-token: write # Required if you ever switch to OIDC
 
+    env:
+      # Define the slug once to ensure consistency
+      DEPLOY_SLUG: ${{ startsWith(github.ref, 'refs/tags/v') && 'prod' || 'staging' }}
+
     steps:
       - uses: actions/checkout@v6
 
@@ -53,8 +57,7 @@ jobs:
             type=ref,event=branch
             type=ref,event=tag
             type=sha,prefix=sha-
-            type=raw,value=staging,enable=${{ github.ref == 'refs/heads/main' }}
-            type=raw,value=production,enable=${{ startsWith(github.ref, 'refs/tags/v') }}
+            type=raw,value=${{ env.DEPLOY_SLUG }}
 
       # 2b. Metadata for FRONTEND
       - name: Extract metadata (Frontend)
@@ -66,8 +69,7 @@ jobs:
             type=ref,event=branch
             type=ref,event=tag
             type=sha,prefix=sha-
-            type=raw,value=staging,enable=${{ github.ref == 'refs/heads/main' }}
-            type=raw,value=production,enable=${{ startsWith(github.ref, 'refs/tags/v') }}
+            type=raw,value=${{ env.DEPLOY_SLUG }}
 
       # 3. Fetch Public Build-Time Secrets
       # We rely on the Action to fetch secrets and export them as env vars
@@ -131,7 +133,7 @@ jobs:
         run: |
           SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
           echo "🚀 Deploying SHA: $SHORT_SHA to Staging"
-          curl -X GET "${{ secrets.COOLIFY_WEBHOOK_STAGING }}?tag=sha-${SHORT_SHA}" \
+          curl -X GET "${{ secrets.COOLIFY_WEBHOOK_STAGING }}?tag=staging" \
             -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}"
 
   deploy-production:
@@ -151,5 +153,5 @@ jobs:
       - name: Trigger Coolify Production
         run: |
           echo "🚀 Deploying Tag: ${{ github.ref_name }} to Production"
-          curl -X GET "${{ secrets.COOLIFY_WEBHOOK_PROD }}?tag=${{ github.ref_name }}" \
+          curl -X GET "${{ secrets.COOLIFY_WEBHOOK_PROD }}?tag=prod" \
             -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}"

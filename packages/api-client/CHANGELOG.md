@@ -1,5 +1,19 @@
 # @zouari-rs/api-client
 
+## 3.6.0
+
+### Minor Changes
+
+- Align deployment strategy with environment slugs.
+
+  Production and staging deployments now use stable Docker tags (`prod` / `staging`)
+  instead of version-specific tags when triggering Coolify deployments.
+
+### Patch Changes
+
+- Updated dependencies
+  - @zouari-rs/validation@3.7.0
+
 ## 3.5.0
 
 ### Minor Changes

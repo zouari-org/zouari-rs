@@ -1,5 +1,14 @@
 # @zouari-rs/validation
 
+## 3.7.0
+
+### Minor Changes
+
+- Align deployment strategy with environment slugs.
+
+  Production and staging deployments now use stable Docker tags (`prod` / `staging`)
+  instead of version-specific tags when triggering Coolify deployments.
+
 ## 3.6.0
 
 ### Minor Changes
