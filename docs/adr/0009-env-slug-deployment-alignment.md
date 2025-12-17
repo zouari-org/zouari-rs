@@ -120,5 +120,5 @@ This guarantees correct image selection even if runtime environment injection fa
 
 * [ADR 0001](./0001-use-infisical-for-secret-management.md): Use Infisical for Secret Management
 * [ADR 0005](./0005-deployment-strategy.md): Deployment Strategy
-* `[.github/workflows/deploy.yml](../../.github/workflows/deploy.yml)`
-* `[infra/docker/docker-compose.prod.yml](../../infra/docker/docker-compose.prod.yml)`
+* [.github/workflows/deploy.yml](../../.github/workflows/deploy.yml)
+* [infra/docker/docker-compose.prod.yml](../../infra/docker/docker-compose.prod.yml)
