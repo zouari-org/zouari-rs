@@ -133,7 +133,7 @@ jobs:
         run: |
           SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
           echo "🚀 Deploying SHA: $SHORT_SHA to Staging"
-          curl -X GET "${{ secrets.COOLIFY_WEBHOOK_STAGING }}?tag=staging" \
+          curl -fsS -X GET "https://coolify.zouari.org/api/v1/deploy?tag=staging&uuid=${{ secrets.COOLIFY_UUID_STAGING }}" \
             -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}"
 
   deploy-production:
@@ -152,6 +152,6 @@ jobs:
     steps:
       - name: Trigger Coolify Production
         run: |
-          echo "🚀 Deploying Tag: ${{ github.ref_name }} to Production"
-          curl -X GET "${{ secrets.COOLIFY_WEBHOOK_PROD }}?tag=prod" \
-            -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}"
+          echo "🚀 Deploying prod tag via Coolify API"
+          curl -fsS -X GET "https://coolify.zouari.org/api/v1/deploy?tag=prod&uuid=${{ secrets.COOLIFY_UUID_PROD }}" \
+          -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}"
