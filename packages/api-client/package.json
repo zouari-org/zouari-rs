@@ -1,6 +1,6 @@
 {
   "name": "@zouari-rs/api-client",
-  "version": "3.5.0",
+  "version": "3.6.0",
   "description": "Auto-generated OpenAPI client for the ZOUARI API.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
