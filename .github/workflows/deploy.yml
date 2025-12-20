@@ -133,7 +133,7 @@ jobs:
         run: |
           SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
           echo "🚀 Deploying SHA: $SHORT_SHA to Staging"
-          curl -X GET \
+          curl --fail -X GET \
           "${{secrets.COOLIFY_DEPLOY_STAGING}}" \
           --header "Authorization: Bearer ${{secrets.COOLIFY_TOKEN}}"
 
@@ -154,6 +154,6 @@ jobs:
       - name: Trigger Coolify Production
         run: |
           echo "🚀 Deploying prod tag via Coolify API"
-          curl -X GET \
+          curl --fail -X GET \
           "${{secrets.COOLIFY_DEPLOY_PROD}}" \
           --header "Authorization: Bearer ${{secrets.COOLIFY_TOKEN}}"
